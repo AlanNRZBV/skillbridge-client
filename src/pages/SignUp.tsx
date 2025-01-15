@@ -1,14 +1,58 @@
 import CustomInput from '../components/UI/CustomInput.tsx';
 import { ArrowUpRightIcon, CheckIcon } from '@heroicons/react/16/solid';
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { icons, Lorem } from '../constants';
 import { NavLink } from 'react-router-dom';
+import { useSignUpMutation } from '../features/user/userApi.ts';
+
+const initialState: IUserMutation = {
+  email: '',
+  firstName: '',
+  lastName: '',
+  profilePicture: undefined,
+  password: '',
+};
 
 const SignUp = () => {
-  const tempFn = () => {};
+  const [form, setForm] = useState<IUserMutation>(initialState);
   const [isChecked, setIsChecked] = useState<boolean>(false);
+
+  const [signUp, { isLoading, isSuccess }] = useSignUpMutation();
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
+    setForm((prevData) => ({
+      ...prevData,
+      [name]: name === 'profilePicture' && files ? files[0] : value,
+    }));
+  };
   const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
+  };
+  const submitHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    Object.keys(form).forEach((key) => {
+      const value = form[key as keyof IUserMutation];
+      if (
+        key === 'profilePicture' &&
+        value &&
+        typeof value === 'object' &&
+        'size' in value
+      ) {
+        formData.append(key, value as File);
+      } else if (value !== undefined && value !== null) {
+        formData.append(key, value);
+      }
+    });
+
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    signUp(formData);
+    setForm(initialState);
   };
 
   return (
@@ -23,33 +67,58 @@ const SignUp = () => {
           </span>
         </div>
         <div className="flex flex-col gap-y-6">
-          <form className="flex flex-col gap-y-5">
+          <form
+            onSubmit={submitHandler}
+            className="flex flex-col gap-y-5"
+            encType="multipart/form-data"
+          >
             <CustomInput
-              onChange={tempFn}
+              onChange={onChange}
               type="text"
               placeholder="enter your name"
-              label="full name"
+              label="first name"
               required
-              id="username"
-              name="username"
+              id="firstName"
+              name="firstName"
+              value={form.firstName}
             />
             <CustomInput
-              onChange={tempFn}
+              onChange={onChange}
+              type="text"
+              placeholder="enter your last name"
+              label="last name"
+              required
+              id="lastName"
+              name="lastName"
+              value={form.lastName}
+            />
+            <CustomInput
+              onChange={onChange}
               type="email"
               placeholder="enter your email"
               label="email"
               required
               id="userEmail"
-              name="userEmail"
+              name="email"
+              value={form.email}
             />
             <CustomInput
-              onChange={tempFn}
+              onChange={onChange}
               type="password"
               placeholder="enter your password"
               label="password"
               required
               id="userPassword"
-              name="userPassword"
+              name="password"
+              value={form.password}
+            />
+            <CustomInput
+              onChange={onChange}
+              type="file"
+              placeholder="Add profile picture"
+              label="profile picture"
+              id="userProfilePicture"
+              name="profilePicture"
             />
             <div className="flex items-center gap-x-2">
               <div className="relative inline-flex items-center justify-center">
@@ -76,6 +145,7 @@ const SignUp = () => {
             <button
               type="submit"
               className="appearance-none rounded-md bg-primary-50 px-[.625em] py-[.875em] text-center text-[.875rem] font-medium capitalize text-white"
+              disabled={isLoading}
             >
               sign up
             </button>

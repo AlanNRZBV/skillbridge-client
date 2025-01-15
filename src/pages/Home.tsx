@@ -13,7 +13,7 @@ import TestimonialCard from '../components/Cards/TestimonialCard.tsx';
 import React, { useState } from 'react';
 import PricingCard from '../components/Cards/PricingCard.tsx';
 import FaqCard from '../components/Cards/FaqCard.tsx';
-import { useGetPricingPlanQuery } from '../features/api/apiSlice.ts';
+import { useGetPricingPlanQuery } from '../features/api/api.ts';
 
 const faqDescription =
   'Still you have any questions? Contact our Team via support@skillbridge.com';

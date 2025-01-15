@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
 
 interface Props {
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: React.HTMLInputTypeAttribute;
   placeholder: string;
   label: string;
@@ -11,6 +11,7 @@ interface Props {
   required?: boolean;
   id: string;
   name: string;
+  value?: string | number | undefined;
 }
 const CustomInput: FC<Props> = ({
   placeholder,
@@ -21,6 +22,7 @@ const CustomInput: FC<Props> = ({
   required,
   id,
   name,
+  value,
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -45,6 +47,7 @@ const CustomInput: FC<Props> = ({
           disabled={disabled}
           name={name}
           id={id}
+          {...(type !== 'file' && { value })}
           className="flex-grow appearance-none bg-transparent outline-0 placeholder:text-[.875rem] placeholder:capitalize placeholder:text-dark-40"
         />
         {type === 'password' &&

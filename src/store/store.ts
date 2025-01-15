@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { apiSlice } from '../features/api/apiSlice.ts';
+import { api } from '../features/api/api.ts';
 import { listenerMiddleware } from '../middleware/listenerMiddleware.ts';
 
 export const store = configureStore({
   reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
+    [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .prepend(listenerMiddleware.middleware)
-      .concat(apiSlice.middleware),
+      .concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

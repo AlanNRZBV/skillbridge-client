@@ -52,4 +52,10 @@ declare interface IUser {
   lastName: string;
   email: string;
   role: 'user' | 'admin';
+  token: string;
+  profilePicture: File | undefined;
 }
+
+declare type IUserMutation = Omit<IUser, 'role' | 'token' | '_id'> & {
+  password: string;
+};
