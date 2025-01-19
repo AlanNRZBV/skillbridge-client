@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
+import { NavLink } from 'react-router-dom';
 
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,6 +13,7 @@ interface Props {
   id: string;
   name: string;
   value?: string | number | undefined;
+  isPassword?: boolean;
 }
 const CustomInput: FC<Props> = ({
   placeholder,
@@ -23,6 +25,7 @@ const CustomInput: FC<Props> = ({
   id,
   name,
   value,
+  isPassword,
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -57,6 +60,11 @@ const CustomInput: FC<Props> = ({
             <EyeSlashIcon onClick={handleShow} className="h-5 w-5" />
           ))}
       </div>
+      {isPassword && (
+        <NavLink className="self-end text-sm text-dark-30" to="#">
+          Forgot Password?
+        </NavLink>
+      )}
     </div>
   );
 };

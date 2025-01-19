@@ -17,7 +17,7 @@ const SignUp = () => {
   const [form, setForm] = useState<IUserMutation>(initialState);
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
-  const [signUp, { isLoading, isSuccess }] = useSignUpMutation();
+  const [signUp, { isLoading }] = useSignUpMutation();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;

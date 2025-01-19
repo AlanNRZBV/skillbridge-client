@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { api } from '../features/api/api.ts';
+import { api } from '../api/api.ts';
 import { listenerMiddleware } from '../middleware/listenerMiddleware.ts';
 
 export const store = configureStore({
