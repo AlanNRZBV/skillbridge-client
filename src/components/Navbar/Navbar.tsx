@@ -1,9 +1,11 @@
 import TopBanner from './TopBanner.tsx';
 import { icons, paths } from '../../constants';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Bars3BottomRightIcon } from '@heroicons/react/24/outline';
 
 const Navbar = () => {
+  const { pathname } = useLocation();
+
   return (
     <nav>
       <div className="container mx-auto lg:max-w-full">
@@ -34,12 +36,25 @@ const Navbar = () => {
             ))}
           </div>
           <div className="flex gap-x-5 text-[14px] text-dark-15 xl:text-[18px]">
-            <NavLink to="/sign-up" className="self-center">
+            <NavLink
+              to="/sign-up"
+              className={({ isActive }) =>
+                isActive
+                  ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
+                  : 'self-center'
+              }
+            >
               Sign Up
             </NavLink>
             <NavLink
               to="/login"
-              className="rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4"
+              className={({ isActive }) =>
+                isActive
+                  ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
+                  : pathname !== '/login' && pathname !== '/sign-up'
+                    ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
+                    : 'self-center'
+              }
             >
               Login
             </NavLink>
