@@ -16,7 +16,7 @@ const CourseCard: FC<ICourse> = ({
         <div className="overflow-hidden rounded-md">
           <img src={img} alt={title} />
         </div>
-        <div className="flex flex-wrap items-center gap-x-[10px] gap-y-[14px] text-[.875rem] text-dark-30">
+        <div className="flex flex-wrap items-center gap-x-[10px] gap-y-[14px] text-sm text-dark-30">
           <span className="gap-x-[10px] rounded-md border border-light-95 bg-white px-[.875em] py-2 xl:text-[1.125rem]">
             {length} Weeks
           </span>
@@ -31,7 +31,7 @@ const CourseCard: FC<ICourse> = ({
           <h4 className="text-[1.125rem] font-semibold text-dark-15 xl:text-2xl">
             {title}
           </h4>
-          <p className="text-[.875rem] text-dark-30 xl:text-[1.125rem] xl:text-base">
+          <p className="text-sm text-dark-30 xl:text-[1.125rem] xl:text-base">
             {description}
           </p>
         </div>

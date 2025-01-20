@@ -28,12 +28,12 @@ const FaqCard: FC<IQuestion> = ({ _id, answer, link, linkTitle, question }) => {
       </div>
       {isOpen ? (
         <>
-          <p className="text-[.875rem] text-dark-30 lg:text-base 2xl:text-[1.125em]">
+          <p className="text-sm text-dark-30 lg:text-base 2xl:text-[1.125em]">
             {answer}
           </p>
           <NavLink
             to={link}
-            className="flex items-center justify-between gap-x-2 rounded-md border border-light-95 bg-light-97 px-5 py-3 text-[.875rem] font-medium lg:px-6 lg:py-4 lg:text-base 2xl:rounded-lg 2xl:p-[1.875em] 2xl:text-[1.125rem]"
+            className="flex items-center justify-between gap-x-2 rounded-md border border-light-95 bg-light-97 px-5 py-3 text-sm font-medium lg:px-6 lg:py-4 lg:text-base 2xl:rounded-lg 2xl:p-[1.875em] 2xl:text-[1.125rem]"
           >
             <span>{linkTitle}</span>
             <div className="rounded-full border border-light-95 bg-white p-2">

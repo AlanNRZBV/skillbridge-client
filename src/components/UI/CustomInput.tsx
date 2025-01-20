@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -33,15 +33,17 @@ const CustomInput: FC<Props> = ({
     setIsVisible((prevState) => !prevState);
   };
 
+  const { pathname } = useLocation();
+
   return (
-    <div className="flex flex-col gap-y-[.625em]">
+    <div className="flex flex-col gap-y-[.625em] xl:gap-y-[.875em]">
       <label
         htmlFor={id}
-        className="text-[.875rem] font-medium capitalize text-dark-15"
+        className="text-sm font-medium capitalize text-dark-15 lg:text-base xl:text-[1.125rem]"
       >
         {label}
       </label>
-      <div className="flex rounded-lg border border-light-95 bg-light-99 p-5">
+      <div className="flex rounded-lg border border-light-95 bg-light-99 p-5 xl:p-6">
         <input
           onChange={onChange}
           placeholder={placeholder}
@@ -51,7 +53,7 @@ const CustomInput: FC<Props> = ({
           name={name}
           id={id}
           {...(type !== 'file' && { value })}
-          className="flex-grow appearance-none bg-transparent outline-0 placeholder:text-[.875rem] placeholder:capitalize placeholder:text-dark-40"
+          className="flex-grow appearance-none bg-transparent outline-0 placeholder:text-sm placeholder:capitalize placeholder:text-dark-40 lg:placeholder:text-base xl:placeholder:text-[1.125rem]"
         />
         {type === 'password' &&
           (!isVisible ? (
@@ -60,8 +62,11 @@ const CustomInput: FC<Props> = ({
             <EyeSlashIcon onClick={handleShow} className="h-5 w-5" />
           ))}
       </div>
-      {isPassword && (
-        <NavLink className="self-end text-sm text-dark-30" to="#">
+      {isPassword && pathname === '/login' && (
+        <NavLink
+          className="self-end text-sm text-dark-30 lg:text-base xl:text-[1.125rem]"
+          to="#"
+        >
           Forgot Password?
         </NavLink>
       )}

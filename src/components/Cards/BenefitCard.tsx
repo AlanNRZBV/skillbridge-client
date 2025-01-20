@@ -16,9 +16,7 @@ const BenefitCard: FC<Props> = ({ description, link, number, title }) => {
       </span>
       <div className="flex flex-1 flex-col gap-y-[.625em]">
         <span className="font-semibold text-dark-20">{title}</span>
-        <p className="text-[.875rem] text-dark-30 lg:text-base">
-          {description}
-        </p>
+        <p className="text-sm text-dark-30 lg:text-base">{description}</p>
       </div>
       <Link
         to={link}

@@ -2,8 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import Home from './pages/Home.tsx';
 import NotFound from './pages/NotFound.tsx';
-import SignUp from './pages/SignUp.tsx';
-import Login from './pages/Login.tsx';
+import UserFormPage from './pages/UserFormPage.tsx';
 import AboutUs from './pages/AboutUs.tsx';
 import Courses from './pages/Courses.tsx';
 import Pricing from './pages/Pricing.tsx';
@@ -24,11 +23,11 @@ const router = createBrowserRouter(
         },
         {
           path: '/sign-up',
-          element: <SignUp />,
+          element: <UserFormPage key="/sign-up" />,
         },
         {
           path: '/login',
-          element: <Login />,
+          element: <UserFormPage key="/login" />,
         },
         {
           path: '/courses',
