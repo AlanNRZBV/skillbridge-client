@@ -3,7 +3,7 @@ import UserForm from '../components/Forms/UserForm.tsx';
 import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 
-const UserFormPage = () => {
+const UserFormContainer = () => {
   const { pathname } = useLocation();
 
   const greetingString =
@@ -35,4 +35,4 @@ const UserFormPage = () => {
   );
 };
 
-export default UserFormPage;
+export default UserFormContainer;

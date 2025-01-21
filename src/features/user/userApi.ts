@@ -15,31 +15,29 @@ export const userApi = api.injectEndpoints({
         method: 'POST',
         body: { ...credentials },
       }),
-      onQueryStarted: async (_, { queryFulfilled }) => {
-        try {
-          const { data } = await queryFulfilled;
-          console.log('=>(userApi.ts:22) ', data);
-        } catch (e) {
-          console.log('=>(userApi.ts:24) error', e);
-        }
-      },
+      invalidatesTags: ['User'],
     }),
-    test: builder.query<any, void>({
+    logOut: builder.mutation<void, void>({
       query: () => ({
-        url: '/users/test',
+        url: '/users/logout',
+        method: 'POST',
+      }),
+      invalidatesTags: ['User'],
+    }),
+    getCurrentUser: builder.query<ILoginResponse, void>({
+      query: () => ({
+        url: '/users/current',
         method: 'GET',
       }),
-      onQueryStarted: async (_, { queryFulfilled }) => {
-        try {
-          const { data } = await queryFulfilled;
-          console.log('=>(userApi.ts:36) data', data);
-        } catch (e) {
-          console.log('=>(userApi.ts:37) error', e);
-        }
-      },
+      providesTags: ['User'],
     }),
   }),
   overrideExisting: true,
 });
 
-export const { useSignUpMutation, useLoginMutation, useTestQuery } = userApi;
+export const {
+  useSignUpMutation,
+  useLoginMutation,
+  useGetCurrentUserQuery,
+  useLogOutMutation,
+} = userApi;

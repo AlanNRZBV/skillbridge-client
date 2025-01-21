@@ -2,9 +2,43 @@ import TopBanner from './TopBanner.tsx';
 import { icons, paths } from '../../constants';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Bars3BottomRightIcon } from '@heroicons/react/24/outline';
+import { useGetCurrentUserQuery } from '../../features/user/userApi.ts';
+import CurrentUser from './CurrentUser.tsx';
 
 const Navbar = () => {
   const { pathname } = useLocation();
+
+  const { data, isError } = useGetCurrentUserQuery();
+
+  console.log('=>(Navbar.tsx:14) data', data);
+  console.log('=>(Navbar.tsx:14) data', isError);
+
+  const loginAndSignUp = (
+    <>
+      <NavLink
+        to="/sign-up"
+        className={({ isActive }) =>
+          isActive
+            ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
+            : 'self-center'
+        }
+      >
+        Sign Up
+      </NavLink>
+      <NavLink
+        to="/login"
+        className={({ isActive }) =>
+          isActive
+            ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
+            : pathname !== '/login' && pathname !== '/sign-up'
+              ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
+              : 'self-center'
+        }
+      >
+        Login
+      </NavLink>
+    </>
+  );
 
   return (
     <nav>
@@ -36,28 +70,11 @@ const Navbar = () => {
             ))}
           </div>
           <div className="flex gap-x-5 text-[14px] text-dark-15 xl:text-[18px]">
-            <NavLink
-              to="/sign-up"
-              className={({ isActive }) =>
-                isActive
-                  ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
-                  : 'self-center'
-              }
-            >
-              Sign Up
-            </NavLink>
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                isActive
-                  ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
-                  : pathname !== '/login' && pathname !== '/sign-up'
-                    ? 'rounded-md bg-primary-50 px-5 py-2 text-white md:px-9 md:py-4'
-                    : 'self-center'
-              }
-            >
-              Login
-            </NavLink>
+            {data && !isError ? (
+              <CurrentUser user={data.user} />
+            ) : (
+              loginAndSignUp
+            )}
             <button className="h-[34px] w-[34px] lg:hidden">
               <Bars3BottomRightIcon className="text-dark-15" />
             </button>

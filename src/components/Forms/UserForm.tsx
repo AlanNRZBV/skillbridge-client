@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC, useState } from 'react';
 import CustomInput from '../UI/CustomInput.tsx';
 import { ArrowUpRightIcon, CheckIcon } from '@heroicons/react/16/solid';
 import { icons } from '../../constants';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   useLoginMutation,
   useSignUpMutation,
@@ -47,12 +47,13 @@ const UserForm: FC<Props> = ({ formType }) => {
 
   const [login] = useLoginMutation();
   const [signUp] = useSignUpMutation();
+  const navigate = useNavigate();
 
   const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!isLogin && 'firstName' in form) {
@@ -74,7 +75,10 @@ const UserForm: FC<Props> = ({ formType }) => {
 
       signUp(formData);
     } else {
-      login(form);
+      try {
+        await login(form);
+        navigate('/');
+      } catch (e) {}
     }
     setForm(initialState);
   };

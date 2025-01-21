@@ -6,6 +6,7 @@ export const api = createApi({
     baseUrl: import.meta.env['VITE_API_URL'],
     credentials: 'include',
   }),
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     getPricingPlan: builder.query<IPricingPlanResponse, void>({
       query: () => ({ url: '/plans', method: 'GET' }),
