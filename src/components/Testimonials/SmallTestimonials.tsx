@@ -1,20 +1,31 @@
-import { Lorem, TESTIMONIALS_CARDS } from '../../constants';
-import { useState } from 'react';
+import { Lorem } from '../../constants';
+import { useEffect, useState } from 'react';
 import TestimonialCard from '../Cards/TestimonialCard.tsx';
 import { ArrowRightIcon } from '@heroicons/react/16/solid';
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
+import { useGetReviewsQuery } from '../../features/review/reviewApi.ts';
 
 const SmallTestimonials = () => {
-  const [cards, _setCards] = useState<ITestimonial[]>(TESTIMONIALS_CARDS);
-
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
+  const { data, isError, isLoading } = useGetReviewsQuery();
+
+  const [reviews, setReviews] = useState<IReview[]>([]);
+
+  useEffect(() => {
+    if (!isLoading && data !== undefined) {
+      setReviews(data.reviews);
+    }
+  }, [isLoading, data]);
+
+  const isReviewsEmpty = reviews.length === 0;
+
   const goNext = () => {
-    setCurrentIndex((prevState) => (prevState + 1) % cards.length);
+    setCurrentIndex((prevState) => (prevState + 1) % reviews.length);
   };
   const goPrevious = () => {
     setCurrentIndex((prevState) =>
-      prevState === 0 ? cards.length - 1 : prevState - 1,
+      prevState === 0 ? reviews.length - 1 : prevState - 1,
     );
   };
 
@@ -27,12 +38,15 @@ const SmallTestimonials = () => {
         <p className="text-sm text-dark-35 lg:text-base">{Lorem}</p>
       </div>
       <div className="flex flex-1 flex-row overflow-hidden">
-        <TestimonialCard
-          _id={cards[currentIndex]._id}
-          img={cards[currentIndex].img}
-          author={cards[currentIndex].author}
-          content={cards[currentIndex].content}
-        />
+        {isLoading && <div>Loading</div>}
+        {!isReviewsEmpty && !isError && (
+          <TestimonialCard
+            authorId={reviews[currentIndex].authorId}
+            courseId={reviews[currentIndex].courseId}
+            _id={reviews[currentIndex]._id}
+            content={reviews[currentIndex].content}
+          />
+        )}
       </div>
       <div className="flex items-center justify-center gap-x-[.625em] lg:self-end">
         <button

@@ -1,28 +1,36 @@
 import Hero from '../components/Hero.tsx';
 import Section from '../components/Section.tsx';
-import {
-  BENEFITS_CARDS,
-  COURSES_CARDS,
-  FAQ,
-  Lorem,
-  TESTIMONIALS_CARDS,
-} from '../constants';
+import { BENEFITS_CARDS, COURSES_CARDS, FAQ, Lorem } from '../constants';
 import BenefitCard from '../components/Cards/BenefitCard.tsx';
 import CourseCard from '../components/Cards/CourseCard.tsx';
 import TestimonialCard from '../components/Cards/TestimonialCard.tsx';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PricingCard from '../components/Cards/PricingCard.tsx';
 import FaqCard from '../components/Cards/FaqCard.tsx';
 import { useGetPricingPlanQuery } from '../api/api.ts';
+import { useGetReviewsQuery } from '../features/review/reviewApi.ts';
 
 const faqDescription =
   'Still you have any questions? Contact our Team via support@skillbridge.com';
 
 const Home = () => {
   const [isMonthly, setIsMonthly] = useState<boolean>(true);
+  const [reviews, setReviews] = useState<IReview[]>([]);
 
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetPricingPlanQuery();
+  const {
+    data: PricingPlanResponse,
+    isSuccess,
+    error,
+  } = useGetPricingPlanQuery();
+  const { data: reviewsResponse, isLoading, isError } = useGetReviewsQuery();
+
+  useEffect(() => {
+    if (!isLoading && reviewsResponse !== undefined) {
+      setReviews(reviewsResponse.reviews);
+    }
+  }, [isLoading, reviewsResponse]);
+
+  const isReviewsEmpty = reviews.length === 0;
 
   const pricingPlanChange = () => {
     setIsMonthly((prevState) => !prevState);
@@ -33,7 +41,7 @@ const Home = () => {
   if (isLoading) {
     plansContent = <div>some shit is loading right now</div>;
   } else if (isSuccess) {
-    const { plans } = data;
+    const { plans } = PricingPlanResponse;
     plansContent = plans.map((item: IPricingPlan) => (
       <PricingCard
         key={item._id}
@@ -84,15 +92,19 @@ const Home = () => {
       </Section>
       <Section title="our testimonials" description={Lorem} link="#">
         <div className="grid gap-5 md:grid-cols-2">
-          {TESTIMONIALS_CARDS.map((item) => (
-            <TestimonialCard
-              key={item._id}
-              _id={item._id}
-              img={item.img}
-              author={item.author}
-              content={item.content}
-            />
-          ))}
+          {reviews &&
+            !isReviewsEmpty &&
+            reviews
+              .slice(0, 4)
+              .map((item) => (
+                <TestimonialCard
+                  key={item._id}
+                  _id={item._id}
+                  content={item.content}
+                  authorId={item.authorId}
+                  courseId={item.courseId}
+                />
+              ))}
         </div>
       </Section>
       <Section

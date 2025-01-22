@@ -1,5 +1,6 @@
 const iconUrl = `${import.meta.env.VITE_API_URL}/assets/icons/`;
-const imageUrl = `${import.meta.env.VITE_API_URL}/assets/images/`;
+export const imageUrl = `${import.meta.env.VITE_API_URL}/assets/images/`;
+export const apiUrl = import.meta.env.VITE_API_URL as string;
 
 export const icons = {
   mainDesktop: `${iconUrl}/skillbridge-desktop.svg`,
@@ -26,10 +27,6 @@ export const images = {
   courseCover04: `${imageUrl}/course-04-cover.png`,
   courseCover05: `${imageUrl}/course-05-cover.png`,
   courseCover06: `${imageUrl}/course-06-cover.png`,
-  avatar01: `${imageUrl}/avatar-01.png`,
-  avatar02: `${imageUrl}/avatar-02.png`,
-  avatar03: `${imageUrl}/avatar-03.png`,
-  avatar04: `${imageUrl}/avatar-04.png`,
 };
 
 export const paths = [
@@ -201,37 +198,6 @@ export const COURSES_CARDS: ICourse[] = [
     length: '6',
     difficulty: 'advanced',
     author: 'Jennifer Wilson',
-  },
-];
-
-export const TESTIMONIALS_CARDS: ITestimonial[] = [
-  {
-    _id: '01',
-    img: images.avatar01,
-    author: 'Sarah Thompson',
-    content:
-      'The web design course provided a solid foundation for me. The instructors were knowledgeable and supportive, and the interactive learning environment was engaging. I highly recommend it!',
-  },
-  {
-    _id: '02',
-    img: images.avatar02,
-    author: 'Michael Adams',
-    content:
-      "The UI/UX design course exceeded my expectations. The instructor's expertise and practical assignments helped me improve my design skills. I feel more confident in my career now. Thank you!",
-  },
-  {
-    _id: '03',
-    img: images.avatar03,
-    author: 'Jennifer Wilson',
-    content:
-      "The mobile app development course was fantastic! The step-by-step tutorials and hands-on projects helped me grasp the concepts easily. I'm now building my own app. Great course!",
-  },
-  {
-    _id: '04',
-    img: images.avatar04,
-    author: 'David Brown',
-    content:
-      "I enrolled in the graphic design course as a beginner, and it was the perfect starting point. The instructor's guidance and feedback improved my design abilities significantly. I'm grateful for this course!",
   },
 ];
 

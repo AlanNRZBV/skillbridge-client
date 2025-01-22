@@ -10,9 +10,6 @@ const Navbar = () => {
 
   const { data, isError } = useGetCurrentUserQuery();
 
-  console.log('=>(Navbar.tsx:14) data', data);
-  console.log('=>(Navbar.tsx:14) data', isError);
-
   const loginAndSignUp = (
     <>
       <NavLink

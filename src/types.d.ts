@@ -12,11 +12,23 @@ declare interface ICourse {
   author: string;
 }
 
-declare interface ITestimonial {
+declare interface IReview {
   _id: string;
-  img: string;
-  author: string;
+  authorId: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    profilePicture: string;
+  };
   content: string;
+  courseId: {
+    _id: string;
+    title: string;
+  };
+}
+
+declare interface IReviewResponse extends ApiResponse {
+  reviews: IReview[];
 }
 
 declare interface IFeature {
@@ -54,8 +66,7 @@ declare interface IUser {
   profilePicture: File | undefined;
 }
 
-declare interface ILoginResponse {
-  message: string;
+declare interface ILoginResponse extends ApiResponse {
   user: IUser;
 }
 
