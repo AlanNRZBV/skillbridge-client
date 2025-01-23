@@ -1,6 +1,6 @@
 import Hero from '../components/Hero.tsx';
 import Section from '../components/Section.tsx';
-import { BENEFITS_CARDS, COURSES_CARDS, FAQ, Lorem } from '../constants';
+import { BENEFITS_CARDS, FAQ, Lorem } from '../constants';
 import BenefitCard from '../components/Cards/BenefitCard.tsx';
 import CourseCard from '../components/Cards/CourseCard.tsx';
 import TestimonialCard from '../components/Cards/TestimonialCard.tsx';
@@ -9,6 +9,7 @@ import PricingCard from '../components/Cards/PricingCard.tsx';
 import FaqCard from '../components/Cards/FaqCard.tsx';
 import { useGetPricingPlanQuery } from '../api/api.ts';
 import { useGetReviewsQuery } from '../features/review/reviewApi.ts';
+import { useGetCoursesQuery } from '../features/course/courseApi.ts';
 
 const faqDescription =
   'Still you have any questions? Contact our Team via support@skillbridge.com';
@@ -16,21 +17,41 @@ const faqDescription =
 const Home = () => {
   const [isMonthly, setIsMonthly] = useState<boolean>(true);
   const [reviews, setReviews] = useState<IReview[]>([]);
+  const [courses, setCourses] = useState<ICourse[]>([]);
 
   const {
-    data: PricingPlanResponse,
-    isSuccess,
+    data: pricingPlansResponse,
+    isLoading: isPlansLoading,
+    isSuccess: isPlansSuccess,
+    isError: isPlansError,
     error,
   } = useGetPricingPlanQuery();
-  const { data: reviewsResponse, isLoading, isError } = useGetReviewsQuery();
+  const {
+    data: reviewsResponse,
+    isLoading: isReviewsLoading,
+    isError: _isReviewsError,
+  } = useGetReviewsQuery();
+  const {
+    data: coursesResponse,
+    isError: isCoursesError,
+    isLoading: isCoursesLoading,
+    isSuccess: isCoursesSuccess,
+  } = useGetCoursesQuery();
 
   useEffect(() => {
-    if (!isLoading && reviewsResponse !== undefined) {
+    if (!isReviewsLoading && reviewsResponse !== undefined) {
       setReviews(reviewsResponse.reviews);
     }
-  }, [isLoading, reviewsResponse]);
+  }, [isReviewsLoading, reviewsResponse]);
+
+  useEffect(() => {
+    if (!isCoursesLoading && coursesResponse !== undefined) {
+      setCourses(coursesResponse.courses);
+    }
+  }, [isCoursesLoading, coursesResponse]);
 
   const isReviewsEmpty = reviews.length === 0;
+  const isCoursesEmpty = courses.length === 0;
 
   const pricingPlanChange = () => {
     setIsMonthly((prevState) => !prevState);
@@ -38,10 +59,10 @@ const Home = () => {
 
   let plansContent: React.ReactNode;
 
-  if (isLoading) {
+  if (isPlansLoading) {
     plansContent = <div>some shit is loading right now</div>;
-  } else if (isSuccess) {
-    const { plans } = PricingPlanResponse;
+  } else if (isPlansSuccess) {
+    const { plans } = pricingPlansResponse;
     plansContent = plans.map((item: IPricingPlan) => (
       <PricingCard
         key={item._id}
@@ -54,7 +75,7 @@ const Home = () => {
         features={item.features}
       />
     ));
-  } else if (isError) {
+  } else if (isPlansError) {
     plansContent = <div>here we ago again {error?.toString()}</div>;
   }
 
@@ -76,22 +97,17 @@ const Home = () => {
       </Section>
       <Section title="our courses" description={Lorem} link="#">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-          {COURSES_CARDS.map((item) => (
-            <CourseCard
-              key={item._id}
-              _id={item._id}
-              img={item.img}
-              title={item.title}
-              description={item.description}
-              difficulty={item.difficulty}
-              length={item.length}
-              author={item.author}
-            />
-          ))}
+          {isCoursesLoading && <span>Courses loading</span>}
+          {courses &&
+            !isCoursesEmpty &&
+            courses.map((item) => <CourseCard key={item._id} course={item} />)}
+          {isCoursesSuccess && isCoursesEmpty && <span>courses is empty</span>}
+          {isCoursesError && <span>Error during courses loading</span>}
         </div>
       </Section>
       <Section title="our testimonials" description={Lorem} link="#">
         <div className="grid gap-5 md:grid-cols-2">
+          {isReviewsLoading && <span>Reviews loading</span>}
           {reviews &&
             !isReviewsEmpty &&
             reviews

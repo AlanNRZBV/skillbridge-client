@@ -1,25 +1,9 @@
 declare interface ApiResponse {
   message: string;
 }
-
-declare interface ICourse {
-  _id: string;
-  img: string;
-  title: string;
-  description: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-  length: string;
-  author: string;
-}
-
 declare interface IReview {
   _id: string;
-  authorId: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    profilePicture: string;
-  };
+  authorId: IUserPopulated;
   content: string;
   courseId: {
     _id: string;
@@ -66,6 +50,13 @@ declare interface IUser {
   profilePicture: File | undefined;
 }
 
+declare interface IUserPopulated {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  profilePicture: string | undefined;
+}
+
 declare interface ILoginResponse extends ApiResponse {
   user: IUser;
 }
@@ -73,3 +64,31 @@ declare interface ILoginResponse extends ApiResponse {
 declare type IUserMutation = Omit<IUser, '_id'> & {
   password: string;
 };
+
+declare interface ICourse {
+  _id: string;
+  title: string;
+  description: string;
+  availability?: 'free' | 'paid';
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  length: number;
+  author: IUserPopulated;
+  previewImages: string[];
+  mainImg: string;
+  contents: IContentsItem[];
+}
+
+declare interface IContentsItem {
+  title: string;
+  lessons: ILesson[];
+}
+
+declare interface ILesson {
+  title: string;
+  length: string;
+  videoUrl: string;
+}
+
+declare interface ICoursesResponse extends ApiResponse {
+  courses: ICourse[];
+}
