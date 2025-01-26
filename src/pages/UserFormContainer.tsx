@@ -22,7 +22,7 @@ const UserFormContainer = () => {
           <h1 className="text-[1.75rem] font-semibold capitalize text-dark-15 lg:text-[2.375em] lg:font-semibold xl:text-5xl">
             {pathname === '/login' ? 'login' : 'sign up'}
           </h1>
-          <span className="text-sm text-dark-30 lg:text-base xl:text-[1.125rem]">
+          <span className="text-sm text-dark-30 lg:text-base xl:text-lg">
             {greetingString}
           </span>
         </div>

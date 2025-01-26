@@ -8,7 +8,7 @@ const TestimonialCard: FC<IReview> = ({ _id, content, authorId }) => {
   return (
     <div className="flex flex-col rounded-[10px] border border-light-95 bg-white xl:rounded-xl">
       <div className="p-[1.875em] lg:p-10 2xl:p-[3.125em]">
-        <p className="text-sm text-dark-30 lg:text-base 2xl:text-[1.125rem]">
+        <p className="text-sm text-dark-30 lg:text-base 2xl:text-lg">
           {content}
         </p>
       </div>
@@ -23,10 +23,10 @@ const TestimonialCard: FC<IReview> = ({ _id, content, authorId }) => {
               )}
               {!profilePicture && <UserIcon />}
             </div>
-            <span className="font-semibold 2xl:text-[1.125rem]">{`${firstName} ${lastName.charAt(0)}`}</span>
+            <span className="font-semibold 2xl:text-lg">{`${firstName} ${lastName.charAt(0)}`}</span>
           </div>
           <NavLink
-            className="justify-self-end rounded-md border border-light-95 bg-light-97 px-4 py-[.875em] text-center text-sm font-medium text-dark-15 2xl:rounded-lg 2xl:px-6 2xl:py-[1.125em] 2xl:text-[1.125rem]"
+            className="justify-self-end rounded-md border border-light-95 bg-light-97 px-4 py-[.875em] text-center text-sm font-medium text-dark-15 2xl:rounded-lg 2xl:px-6 2xl:py-[1.125em] 2xl:text-lg"
             to={`/testimonials/:${_id}`}
           >
             Read Full Story

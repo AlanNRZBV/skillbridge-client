@@ -14,7 +14,7 @@ const FaqCard: FC<IQuestion> = ({ _id, answer, link, linkTitle, question }) => {
       <div
         className={`flex items-center justify-between gap-x-[1.875em] ${isOpen ? 'border-b border-light-95 pb-5' : ''}`}
       >
-        <span className="text-base font-medium text-dark-15 lg:text-[1.125rem] 2xl:text-xl">
+        <span className="text-base font-medium text-dark-15 lg:text-lg 2xl:text-xl">
           {question}
         </span>
         <button
@@ -33,7 +33,7 @@ const FaqCard: FC<IQuestion> = ({ _id, answer, link, linkTitle, question }) => {
           </p>
           <NavLink
             to={link}
-            className="flex items-center justify-between gap-x-2 rounded-md border border-light-95 bg-light-97 px-5 py-3 text-sm font-medium lg:px-6 lg:py-4 lg:text-base 2xl:rounded-lg 2xl:p-[1.875em] 2xl:text-[1.125rem]"
+            className="flex items-center justify-between gap-x-2 rounded-md border border-light-95 bg-light-97 px-5 py-3 text-sm font-medium lg:px-6 lg:py-4 lg:text-base 2xl:rounded-lg 2xl:p-[1.875em] 2xl:text-lg"
           >
             <span>{linkTitle}</span>
             <div className="rounded-full border border-light-95 bg-white p-2">

@@ -186,14 +186,14 @@ const UserForm: FC<Props> = ({ formType }) => {
           </div>
           <label
             htmlFor={isLogin ? 'termsAndPolicy' : 'rememberMe'}
-            className="cursor-pointer text-sm text-dark-40 lg:text-base xl:text-[1.125rem]"
+            className="cursor-pointer text-sm text-dark-40 lg:text-base xl:text-lg"
           >
             {isLogin ? <>Remember me</> : acceptTerms}
           </label>
         </div>
         <button
           type="submit"
-          className="appearance-none rounded-md bg-primary-50 px-[.625em] py-[.875em] text-center text-sm font-medium capitalize text-white xl:px-5 xl:py-[1.125em] xl:text-[1.125rem]"
+          className="appearance-none rounded-md bg-primary-50 px-[.625em] py-[.875em] text-center text-sm font-medium capitalize text-white xl:px-5 xl:py-[1.125em] xl:text-lg"
         >
           {isLogin ? 'login' : 'sign up'}
         </button>
@@ -205,7 +205,7 @@ const UserForm: FC<Props> = ({ formType }) => {
       </div>
       <button
         type="button"
-        className="flex appearance-none items-center justify-center gap-x-[.875em] rounded-md border border-light-95 bg-light-97 p-6 py-4 xl:px-5 xl:py-[1.125em] xl:text-[1.125rem]"
+        className="flex appearance-none items-center justify-center gap-x-[.875em] rounded-md border border-light-95 bg-light-97 p-6 py-4 xl:px-5 xl:py-[1.125em] xl:text-lg"
       >
         <img
           className="h-6 w-6"
@@ -216,7 +216,7 @@ const UserForm: FC<Props> = ({ formType }) => {
       </button>
       <NavLink
         to="/sign-up"
-        className="flex items-center justify-center gap-x-1.5 text-sm text-dark-15 lg:text-base xl:text-[1.125rem]"
+        className="flex items-center justify-center gap-x-1.5 text-sm text-dark-15 lg:text-base xl:text-lg"
       >
         {googleLink}
         <ArrowUpRightIcon className="h-5 w-5" />

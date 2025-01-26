@@ -39,7 +39,7 @@ const CustomInput: FC<Props> = ({
     <div className="flex flex-col gap-y-[.625em] xl:gap-y-[.875em]">
       <label
         htmlFor={id}
-        className="text-sm font-medium capitalize text-dark-15 lg:text-base xl:text-[1.125rem]"
+        className="text-sm font-medium capitalize text-dark-15 lg:text-base xl:text-lg"
       >
         {label}
       </label>
@@ -53,7 +53,7 @@ const CustomInput: FC<Props> = ({
           name={name}
           id={id}
           {...(type !== 'file' && { value })}
-          className="flex-grow appearance-none bg-transparent outline-0 placeholder:text-sm placeholder:capitalize placeholder:text-dark-40 lg:placeholder:text-base xl:placeholder:text-[1.125rem]"
+          className="flex-grow appearance-none bg-transparent outline-0 placeholder:text-sm placeholder:capitalize placeholder:text-dark-40 lg:placeholder:text-base xl:placeholder:text-lg"
         />
         {type === 'password' &&
           (!isVisible ? (
@@ -64,7 +64,7 @@ const CustomInput: FC<Props> = ({
       </div>
       {isPassword && pathname === '/login' && (
         <NavLink
-          className="self-end text-sm text-dark-30 lg:text-base xl:text-[1.125rem]"
+          className="self-end text-sm text-dark-30 lg:text-base xl:text-lg"
           to="#"
         >
           Forgot Password?

@@ -33,12 +33,12 @@ const Section: FC<Props> = ({
         <h3 className="text-[1.75rem] font-semibold capitalize leading-[150%] text-dark-15 lg:text-5xl">
           {title}
         </h3>
-        <span className="text-sm leading-[150%] text-dark-35 lg:text-[1.125rem]">
+        <span className="text-sm leading-[150%] text-dark-35 lg:text-lg">
           {description}
         </span>
       </div>
       {controls ? (
-        <div className="self-center rounded-lg bg-white p-3 text-sm font-medium sm:flex sm:self-end xl:text-[1.125rem]">
+        <div className="self-center rounded-lg bg-white p-3 text-sm font-medium sm:flex sm:self-end xl:text-lg">
           <button
             onClick={onClick}
             className={`rounded-md px-6 py-3 capitalize transition duration-200 ease-in-out xl:px-[1.875em] xl:py-[.875em] ${isMonthly ? active : ''}`}
@@ -56,7 +56,7 @@ const Section: FC<Props> = ({
         </div>
       ) : (
         <Link
-          className={`self-start text-nowrap rounded-md border border-light-95 bg-light-99 px-5 py-[.875em] ${!isFaq ? 'sm:self-end' : ''} lg:px-6 lg:py-[1.125em] lg:text-[1.125rem]`}
+          className={`self-start text-nowrap rounded-md border border-light-95 bg-light-99 px-5 py-[.875em] ${!isFaq ? 'sm:self-end' : ''} lg:px-6 lg:py-[1.125em] lg:text-lg`}
           to={link}
         >
           View All
