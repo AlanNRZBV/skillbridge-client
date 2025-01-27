@@ -18,8 +18,6 @@ const Courses = () => {
     }
   }, [isCoursesLoading, coursesResponse]);
 
-  console.log('=>(Courses.tsx:22) courses', courses);
-
   const isCoursesEmpty = courses.length === 0;
   return (
     <div className="container mx-auto my-[3.125em] lg:my-20 2xl:my-[8.25em]">

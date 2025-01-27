@@ -75,20 +75,26 @@ declare interface ICourse {
   author: IUserPopulated;
   previewImages: string[];
   mainImg: string;
+  mainVideo?: string;
   contents: IContentsItem[];
 }
 
 declare interface IContentsItem {
+  _id: string;
   title: string;
   lessons: ILesson[];
 }
 
 declare interface ILesson {
+  _id: string;
   title: string;
-  length: string;
+  length: number;
   videoUrl: string;
 }
 
 declare interface ICoursesResponse extends ApiResponse {
   courses: ICourse[];
+}
+declare interface ICourseResponse extends ApiResponse {
+  course: ICourse;
 }

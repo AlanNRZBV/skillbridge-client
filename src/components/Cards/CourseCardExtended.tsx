@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { imageUrl } from '../../constants';
+import React from 'react';
 
 interface Props {
   course: ICourse;
@@ -77,11 +78,8 @@ const CourseCardExtended: FC<Props> = ({ course }) => {
         </div>
         <div className="flex flex-col gap-y-5 rounded-b-xl border border-light-95 p-6 xl:grid xl:grid-cols-[1fr_1px_1fr_1px_1fr_1px_1fr_1px_1fr] xl:gap-x-10 xl:px-10 2xl:px-[3.125em] 2xl:py-[1.875em]">
           {contents.map((item, index) => (
-            <>
-              <div
-                key={index}
-                className="flex flex-col gap-y-3 xl:gap-y-4 2xl:gap-y-5"
-              >
+            <React.Fragment key={item._id}>
+              <div className="flex flex-col gap-y-3 xl:gap-y-4 2xl:gap-y-5">
                 <span className="2xl:[3.125em] text-3xl font-extrabold xl:text-[2.5rem]">
                   0{index + 1}
                 </span>
@@ -89,11 +87,8 @@ const CourseCardExtended: FC<Props> = ({ course }) => {
                   {item.title}
                 </span>
               </div>
-              <div
-                key={index + 1}
-                className="h-[1px] w-full self-center bg-light-95 last:hidden xl:h-full"
-              ></div>
-            </>
+              <div className="h-[1px] w-full self-center bg-light-95 last:hidden xl:h-full"></div>
+            </React.Fragment>
           ))}
           {isContentsEmpty && <span className="text-center">Coming soon!</span>}
         </div>

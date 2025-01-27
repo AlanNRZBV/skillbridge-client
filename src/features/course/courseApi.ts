@@ -5,7 +5,13 @@ const courseApi = api.injectEndpoints({
     getCourses: builder.query<ICoursesResponse, void>({
       query: () => ({ url: '/courses', method: 'GET' }),
     }),
+    getCourseById: builder.query<ICourseResponse, string>({
+      query: (id: string) => ({
+        url: `/courses/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useGetCoursesQuery } = courseApi;
+export const { useGetCoursesQuery, useGetCourseByIdQuery } = courseApi;
