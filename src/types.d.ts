@@ -11,10 +11,6 @@ declare interface IReview {
   };
 }
 
-declare interface IReviewResponse extends ApiResponse {
-  reviews: IReview[];
-}
-
 declare interface IFeature {
   title: string;
   value: boolean;
@@ -29,9 +25,6 @@ declare interface IPricingPlan {
   features: Record<string, IFeature>;
   createdAt?: string;
   updatedAt?: string;
-}
-declare interface IPricingPlanResponse extends ApiResponse {
-  plans: IPricingPlan[];
 }
 
 declare interface IQuestion {
@@ -55,10 +48,6 @@ declare interface IUserPopulated {
   firstName: string;
   lastName: string;
   profilePicture: string | undefined;
-}
-
-declare interface ILoginResponse extends ApiResponse {
-  user: IUser;
 }
 
 declare type IUserMutation = Omit<IUser, '_id'> & {
@@ -92,9 +81,46 @@ declare interface ILesson {
   videoUrl: string;
 }
 
+declare interface IAboutData {
+  title: string;
+  description: string;
+  section: IAboutSection[];
+}
+
+declare interface IAboutCard {
+  _id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+declare interface IAboutSection {
+  _id: string;
+  title: string;
+  description: string;
+  type: 'achievement' | 'goal';
+  cards: IAboutCard[];
+}
+
+declare interface IReviewResponse extends ApiResponse {
+  reviews: IReview[];
+}
+
+declare interface IPricingPlanResponse extends ApiResponse {
+  plans: IPricingPlan[];
+}
+
+declare interface ILoginResponse extends ApiResponse {
+  user: IUser;
+}
+
 declare interface ICoursesResponse extends ApiResponse {
   courses: ICourse[];
 }
+
 declare interface ICourseResponse extends ApiResponse {
   course: ICourse;
+}
+
+declare interface IAboutResponse extends ApiResponse {
+  aboutData: IAboutData;
 }

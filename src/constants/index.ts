@@ -1,4 +1,4 @@
-const iconUrl = `${import.meta.env.VITE_API_URL}/assets/icons/`;
+export const iconUrl = `${import.meta.env.VITE_API_URL}/assets/icons/`;
 export const imageUrl = `${import.meta.env.VITE_API_URL}/assets/images/`;
 export const apiUrl = import.meta.env.VITE_API_URL as string;
 
@@ -18,15 +18,6 @@ export const icons = {
   notion: `${iconUrl}/icon-notion.svg`,
   netflix: `${iconUrl}/icon-netflix.svg`,
   googleSignUp: `${iconUrl}/icon-google-sign-up.svg`,
-};
-
-export const images = {
-  courseCover01: `${imageUrl}/course-01-cover.png`,
-  courseCover02: `${imageUrl}/course-02-cover.png`,
-  courseCover03: `${imageUrl}/course-03-cover.png`,
-  courseCover04: `${imageUrl}/course-04-cover.png`,
-  courseCover05: `${imageUrl}/course-05-cover.png`,
-  courseCover06: `${imageUrl}/course-06-cover.png`,
 };
 
 export const paths = [
@@ -181,6 +172,27 @@ export const FAQ: IQuestion[] = [
     link: '#',
   },
 ];
+
+export const AboutUs = {
+  title: '',
+  description: '',
+  achievements: {
+    title: '',
+    description: '',
+    cards: [
+      {
+        title: '',
+        description: '',
+        icon: {},
+      },
+    ],
+  },
+  goals: {
+    title: '',
+    description: '',
+    cards: [],
+  },
+};
 
 export const Lorem =
   'Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.';
