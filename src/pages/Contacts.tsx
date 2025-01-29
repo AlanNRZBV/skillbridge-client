@@ -2,12 +2,13 @@ import CustomInput from '../components/UI/CustomInput.tsx';
 import React, { useState } from 'react';
 import { ContactCards } from '../constants';
 import ContactCard from '../components/Cards/ContactCard.tsx';
+import { useCreateMessageMutation } from '../features/contact/contactApi.ts';
 
 interface IMessageState {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
   subject: string;
   message: string;
 }
@@ -17,12 +18,14 @@ const initialState: IMessageState = {
   firstName: '',
   lastName: '',
   message: '',
-  phoneNumber: 996,
+  phoneNumber: '',
   subject: '',
 };
 
 const Contacts = () => {
   const [form, setForm] = useState<IMessageState>(initialState);
+
+  const [createMessage] = useCreateMessageMutation();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,6 +33,27 @@ const Contacts = () => {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const submitHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const userData: IUserData = {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      email: form.email,
+      phoneNumber: form.phoneNumber,
+    };
+
+    const message: IMessageMutation = {
+      subject: form.subject,
+      message: form.message,
+      userData: userData,
+    };
+
+    createMessage(message);
+
+    // setForm(initialState);
   };
 
   return (
@@ -50,7 +74,10 @@ const Contacts = () => {
       </div>
       <div className="flex flex-col rounded-xl bg-white xl:flex-row">
         <div className="flex flex-col gap-y-[1.875em] border-b border-b-light-95 xl:grow xl:border-b-0 xl:border-r xl:border-r-light-95">
-          <form className="flex flex-col gap-y-5 p-[1.875em] md:grid md:grid-cols-2 md:gap-4 xl:gap-10 xl:p-[3.75em] 2xl:gap-y-[3.125em] 2xl:p-20">
+          <form
+            onSubmit={submitHandler}
+            className="flex flex-col gap-y-5 p-[1.875em] md:grid md:grid-cols-2 md:gap-4 xl:gap-10 xl:p-[3.75em] 2xl:gap-y-[3.125em] 2xl:p-20"
+          >
             <CustomInput
               onChange={onChange}
               type="text"

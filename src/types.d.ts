@@ -108,6 +108,19 @@ declare interface IContactCard {
   data: string;
 }
 
+declare interface IUserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+}
+
+declare interface IMessageMutation {
+  subject: string;
+  message: string;
+  userData: IUserData;
+}
+
 declare interface IReviewResponse extends ApiResponse {
   reviews: IReview[];
 }
