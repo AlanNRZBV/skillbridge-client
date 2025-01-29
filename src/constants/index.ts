@@ -1,3 +1,5 @@
+import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/16/solid';
+
 export const iconUrl = `${import.meta.env.VITE_API_URL}/assets/icons/`;
 export const imageUrl = `${import.meta.env.VITE_API_URL}/assets/images/`;
 export const apiUrl = import.meta.env.VITE_API_URL as string;
@@ -173,26 +175,32 @@ export const FAQ: IQuestion[] = [
   },
 ];
 
-export const AboutUs = {
-  title: '',
-  description: '',
-  achievements: {
-    title: '',
-    description: '',
-    cards: [
-      {
-        title: '',
-        description: '',
-        icon: {},
-      },
-    ],
+export const ContactCards: IContactCard[] = [
+  {
+    icon: EnvelopeIcon,
+    data: 'support@skillbridge.com',
+    type: 'email',
+    title: 'support@skillbridge.com',
   },
-  goals: {
-    title: '',
-    description: '',
-    cards: [],
+  {
+    icon: PhoneIcon,
+    data: '910000000000',
+    type: 'tel',
+    title: '+91 00000 00000',
   },
-};
+  {
+    icon: MapPinIcon,
+    data: "https://www.google.com/maps/place/10%C2%B008'38.4%22N+142%C2%B022'44.0%22E/@10.14401,142.37888,25551350m/data=!3m1!1e3!4m4!3m3!8m2!3d10.14401!4d142.37888?entry=ttu&g_ep=EgoyMDI1MDEyNi4wIKXMDSoASAFQAw%3D%3D",
+    type: 'geodata',
+    title: 'Some Where in the World',
+  },
+  {
+    icon: EnvelopeIcon,
+    data: 'skillbridge',
+    type: 'socials',
+    title: 'Social Profiles',
+  },
+];
 
 export const Lorem =
   'Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.';

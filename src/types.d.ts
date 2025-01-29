@@ -101,6 +101,13 @@ declare interface IAboutSection {
   cards: IAboutCard[];
 }
 
+declare interface IContactCard {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  type: 'email' | 'tel' | 'geodata' | 'socials';
+  title: string;
+  data: string;
+}
+
 declare interface IReviewResponse extends ApiResponse {
   reviews: IReview[];
 }

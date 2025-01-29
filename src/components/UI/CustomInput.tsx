@@ -14,6 +14,7 @@ interface Props {
   name: string;
   value?: string | number | undefined;
   isPassword?: boolean;
+  style?: string;
 }
 const CustomInput: FC<Props> = ({
   placeholder,
@@ -26,6 +27,7 @@ const CustomInput: FC<Props> = ({
   name,
   value,
   isPassword,
+  style,
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -36,7 +38,9 @@ const CustomInput: FC<Props> = ({
   const { pathname } = useLocation();
 
   return (
-    <div className="flex flex-col gap-y-[.625em] xl:gap-y-[.875em]">
+    <div
+      className={`flex flex-col gap-y-[.625em] xl:gap-y-[.875em] ${style ? style : ''}`}
+    >
       <label
         htmlFor={id}
         className="text-sm font-medium capitalize text-dark-15 lg:text-base xl:text-lg"
