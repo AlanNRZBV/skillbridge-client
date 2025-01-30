@@ -68,7 +68,7 @@ const Section: FC<Props> = ({
   if (isFaq) {
     return (
       <section
-        className={`2xl:[9.375em] container mx-auto mb-[3.25em] grid grid-cols-1 lg:mb-[6.25em]`}
+        className={`mb-[3.25em] grid grid-cols-1 lg:mb-[6.25em] 2xl:mb-[9.375em]`}
       >
         <div className="grid grid-cols-1 gap-y-10 rounded-xl bg-white p-6 lg:grid-cols-2 lg:gap-x-20 lg:p-20 xl:grid-cols-3 2xl:gap-x-[7.5em] 2xl:p-[6.25em]">
           {headerBlock}
@@ -79,7 +79,7 @@ const Section: FC<Props> = ({
   }
 
   return (
-    <section className={`container mx-auto grid grid-cols-1 gap-y-10`}>
+    <section className={`grid grid-cols-1 gap-y-10`}>
       {headerBlock}
       {children}
     </section>

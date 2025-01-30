@@ -11,7 +11,7 @@ import { useGetPricingPlanQuery } from '../api/api.ts';
 import { useGetReviewsQuery } from '../features/review/reviewApi.ts';
 import { useGetCoursesQuery } from '../features/course/courseApi.ts';
 
-const faqDescription =
+export const faqDescription =
   'Still you have any questions? Contact our Team via support@skillbridge.com';
 
 const Home = () => {
@@ -26,11 +26,8 @@ const Home = () => {
     isError: isPlansError,
     error,
   } = useGetPricingPlanQuery();
-  const {
-    data: reviewsResponse,
-    isLoading: isReviewsLoading,
-    isError: _isReviewsError,
-  } = useGetReviewsQuery();
+  const { data: reviewsResponse, isLoading: isReviewsLoading } =
+    useGetReviewsQuery();
   const {
     data: coursesResponse,
     isError: isCoursesError,
@@ -80,7 +77,7 @@ const Home = () => {
   }
 
   return (
-    <div className="flex h-full flex-col gap-y-[3.125em] lg:gap-y-[6.25em] 2xl:gap-y-[9.375em]">
+    <div className="container mx-auto flex h-full flex-col gap-y-[3.125em] lg:gap-y-[6.25em] 2xl:gap-y-[9.375em]">
       <Hero />
       <Section title="benefits" description={Lorem} link="#">
         <div className="grid grid-cols-1 gap-[1.875em] sm:grid-cols-2 lg:grid-cols-3">
