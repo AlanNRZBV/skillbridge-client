@@ -1,6 +1,7 @@
 import { useGetAboutDataQuery } from '../features/about/aboutApi.ts';
 import AboutSection from '../components/AboutSection.tsx';
 import { NavLink } from 'react-router-dom';
+import PageHeading from '../components/PageHeading.tsx';
 
 const AboutUs = () => {
   const { data, isError, isSuccess, isLoading } = useGetAboutDataQuery();
@@ -15,8 +16,6 @@ const AboutUs = () => {
     content = <div>Loading...</div>;
   }
 
-  console.log('=>(AboutUs.tsx:17) data', data);
-
   if (isSuccess && data) {
     const {
       aboutData: { title, description, section },
@@ -26,14 +25,7 @@ const AboutUs = () => {
 
     content = (
       <>
-        <div className="mb-[3.125em] flex flex-col gap-y-4 border-b border-light-90 pb-[1.875em] lg:mb-20 lg:grid lg:grid-cols-2 lg:gap-x-20 lg:pb-10 xl:mb-[6.25em] xl:pb-[3.125em]">
-          <h3 className="self-center text-[1.75rem] font-semibold text-dark-15 lg:text-[2.375rem] xl:text-5xl">
-            {title}
-          </h3>
-          <p className="text-sm text-dark-35 lg:text-base xl:text-lg">
-            {description}
-          </p>
-        </div>
+        <PageHeading title={title} description={description} />
         <div className="mb-[3.125em] flex flex-col gap-y-[3.125em] lg:mb-[3.75em] xl:mb-20 xl:gap-y-44">
           {!isSectionsEmpty &&
             section &&

@@ -1,8 +1,9 @@
 import CustomInput from '../components/UI/CustomInput.tsx';
 import React, { useState } from 'react';
-import { ContactCards } from '../constants';
+import { ContactCards, Headings } from '../constants';
 import ContactCard from '../components/Cards/ContactCard.tsx';
 import { useCreateMessageMutation } from '../features/contact/contactApi.ts';
+import PageHeading from '../components/PageHeading.tsx';
 
 interface IMessageState {
   firstName: string;
@@ -58,20 +59,10 @@ const Contacts = () => {
 
   return (
     <div className="container mx-auto my-[3.125em] xl:my-20 2xl:my-[6.875em]">
-      <div className="mb-[3.125em] flex flex-col gap-y-4 border-b border-b-light-90 pb-[1.875em] lg:grid lg:grid-cols-2 lg:gap-x-20 xl:mb-20 2xl:pb-[3.125em]">
-        <h3 className="text-[1.75rem] font-semibold text-dark-15 lg:self-center lg:text-[2.375em] 2xl:text-5xl">
-          Contact Us
-        </h3>
-        <p className="text-sm text-dark-35 lg:text-base 2xl:text-lg">
-          Welcome to SkillBridge's Pricing Plan page, where we offer two
-          comprehensive options to cater to your needs: Free and Pro. We believe
-          in providing flexible and affordable pricing options for our services.
-          Whether you're an individual looking to enhance your skills or a
-          business seeking professional development solutions, we have a plan
-          that suits you. Explore our pricing options below and choose the one
-          that best fits your requirements.
-        </p>
-      </div>
+      <PageHeading
+        title={Headings.contacts.title}
+        description={Headings.contacts.description}
+      />
       <div className="flex flex-col rounded-xl bg-white xl:flex-row">
         <div className="flex flex-col gap-y-[1.875em] border-b border-b-light-95 xl:grow xl:border-b-0 xl:border-r xl:border-r-light-95">
           <form

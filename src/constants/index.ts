@@ -202,5 +202,23 @@ export const ContactCards: IContactCard[] = [
   },
 ];
 
+export const Headings = {
+  pricing: {
+    title: 'Our Pricing',
+    description:
+      "Welcome to SkillBridge's Pricing Plan page, where we offer two comprehensive options to cater to your needs: Free and Pro. We believe in providing flexible and affordable pricing options for our services. Whether you're an individual looking to enhance your skills or a business seeking professional development solutions, we have a plan that suits you. Explore our pricing options below and choose the one that best fits your requirements.",
+  },
+  courses: {
+    title: 'Online Courses on Design and Development',
+    description:
+      'Welcome to our platform, where we are passionate about empowering individuals to master the world of design and development. We offer a wide range of online courses designed to equip learners with the skills and knowledge needed to succeed in the ever-evolving digital landscape.',
+  },
+  contacts: {
+    title: 'Contact Us',
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.',
+  },
+};
+
 export const Lorem =
   'Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.';
