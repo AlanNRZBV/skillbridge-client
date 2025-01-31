@@ -8,7 +8,7 @@ import Courses from './pages/Courses.tsx';
 import Pricing from './pages/Pricing.tsx';
 import Contacts from './pages/Contacts.tsx';
 import Course from './components/Course.tsx';
-import Checkout from './pages/Checkout.tsx';
+import Profile from './pages/Profile.tsx';
 import UnderConstruction from './pages/UnderConstruction.tsx';
 
 const router = createBrowserRouter(
@@ -51,8 +51,8 @@ const router = createBrowserRouter(
           element: <Contacts />,
         },
         {
-          path: '/checkout',
-          element: <Checkout />,
+          path: '/profile',
+          element: <Profile />,
         },
         {
           path: '/temporal-path',

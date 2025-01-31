@@ -2,8 +2,9 @@ import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { PlusIcon } from '@heroicons/react/16/solid';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { tempPath } from '../../constants';
 
-const FaqCard: FC<IQuestion> = ({ _id, answer, link, linkTitle, question }) => {
+const FaqCard: FC<IQuestion> = ({ _id, answer, linkTitle, question }) => {
   const initial = _id === '01';
   const [isOpen, setIsOpen] = useState<boolean>(initial);
   const toggleHandler = () => {
@@ -32,7 +33,7 @@ const FaqCard: FC<IQuestion> = ({ _id, answer, link, linkTitle, question }) => {
             {answer}
           </p>
           <NavLink
-            to={link}
+            to={tempPath}
             className="flex items-center justify-between gap-x-2 rounded-md border border-light-95 bg-light-97 px-5 py-3 text-sm font-medium lg:px-6 lg:py-4 lg:text-base 2xl:rounded-lg 2xl:p-[1.875em] 2xl:text-lg"
           >
             <span>{linkTitle}</span>

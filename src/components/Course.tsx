@@ -3,6 +3,7 @@ import { useGetCourseByIdQuery } from '../features/course/courseApi.ts';
 import ReactPlayer from 'react-player';
 import CoursePartCard from './Cards/CoursePartCard.tsx';
 import PageHeading from './PageHeading.tsx';
+import NoContent from './NoContent.tsx';
 
 const Course = () => {
   const { id } = useParams();
@@ -21,9 +22,7 @@ const Course = () => {
   }
 
   if (data && isSuccess) {
-    const { title, description, contents, mainVideo } = data.course;
-
-    const isContentsEmpty = contents.length === 0;
+    const { title, description, contents, mainVideo, released } = data.course;
 
     content = (
       <>
@@ -39,12 +38,12 @@ const Course = () => {
           </div>
         )}
         <div className="flex flex-col gap-y-5 lg:grid lg:grid-cols-2 lg:gap-5 xl:gap-[1.875em]">
-          {!isContentsEmpty &&
+          {released &&
             contents &&
             contents.map((item, index) => (
               <CoursePartCard key={item._id} content={item} index={index} />
             ))}
-          {isContentsEmpty && <div>Coming soon!</div>}
+          {!released && <NoContent />}
         </div>
       </>
     );

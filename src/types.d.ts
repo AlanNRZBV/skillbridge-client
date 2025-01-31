@@ -65,6 +65,7 @@ declare interface ICourse {
   previewImages: string[];
   mainImg: string;
   mainVideo?: string;
+  released: boolean;
   contents: IContentsItem[];
 }
 

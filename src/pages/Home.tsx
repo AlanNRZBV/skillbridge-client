@@ -24,7 +24,6 @@ const Home = () => {
     isLoading: isPlansLoading,
     isSuccess: isPlansSuccess,
     isError: isPlansError,
-    error,
   } = useGetPricingPlanQuery();
   const { data: reviewsResponse, isLoading: isReviewsLoading } =
     useGetReviewsQuery();
@@ -73,13 +72,13 @@ const Home = () => {
       />
     ));
   } else if (isPlansError) {
-    plansContent = <div>here we ago again {error?.toString()}</div>;
+    plansContent = <div>something went wrong</div>;
   }
 
   return (
     <div className="container mx-auto flex h-full flex-col gap-y-[3.125em] lg:gap-y-[6.25em] 2xl:gap-y-[9.375em]">
       <Hero />
-      <Section title="benefits" description={Lorem} link="#">
+      <Section title="benefits" description={Lorem}>
         <div className="grid grid-cols-1 gap-[1.875em] sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS_CARDS.map((item, index) => (
             <BenefitCard
@@ -92,7 +91,7 @@ const Home = () => {
           ))}
         </div>
       </Section>
-      <Section title="our courses" description={Lorem} link="#">
+      <Section title="our courses" description={Lorem} link="/courses">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {isCoursesLoading && <span>Courses loading</span>}
           {courses &&
@@ -102,7 +101,7 @@ const Home = () => {
           {isCoursesError && <span>Error during courses loading</span>}
         </div>
       </Section>
-      <Section title="our testimonials" description={Lorem} link="#">
+      <Section title="our testimonials" description={Lorem}>
         <div className="grid gap-5 md:grid-cols-2">
           {isReviewsLoading && <span>Reviews loading</span>}
           {reviews &&
@@ -123,7 +122,7 @@ const Home = () => {
       <Section
         title="Our Pricing"
         description={Lorem}
-        link="#"
+        link="/pricing"
         controls
         isMonthly={isMonthly}
         onClick={pricingPlanChange}

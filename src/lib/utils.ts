@@ -7,3 +7,15 @@ export const formatTime = (n: number): string => {
 
   return [hoursPart, minutesPart].filter(Boolean).join(' ');
 };
+
+export const changeCourseIndexToZero = (arr: ICourse[], value: string) => {
+  const arrayCopy = [...arr];
+  const index = arrayCopy.findIndex((item) => item.title === value);
+
+  if (index !== -1) {
+    const [foundItem] = arrayCopy.splice(index, 1);
+    arrayCopy.unshift(foundItem);
+  }
+
+  return arrayCopy;
+};

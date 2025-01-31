@@ -4,11 +4,22 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { Bars3BottomRightIcon } from '@heroicons/react/24/outline';
 import { useGetCurrentUserQuery } from '../../features/user/userApi.ts';
 import CurrentUser from './CurrentUser.tsx';
+import Sidebar from '../Sidebar.tsx';
+import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { XMarkIcon } from '@heroicons/react/16/solid';
 
 const Navbar = () => {
-  const { pathname } = useLocation();
+  const [sideBarState, setSideBarState] = useState(false);
 
+  const isLg = useMediaQuery({ minWidth: 1024 });
+
+  const { pathname } = useLocation();
   const { data, isError } = useGetCurrentUserQuery();
+
+  const toggleSideBar = () => {
+    setSideBarState((prevState) => !prevState);
+  };
 
   const loginAndSignUp = (
     <>
@@ -39,7 +50,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <div className="container mx-auto lg:max-w-full">
+      <div className="container relative mx-auto lg:max-w-full">
         <TopBanner />
       </div>
       <div className="container mx-auto">
@@ -72,11 +83,18 @@ const Navbar = () => {
             ) : (
               loginAndSignUp
             )}
-            <button className="h-[34px] w-[34px] lg:hidden">
-              <Bars3BottomRightIcon className="text-dark-15" />
+            <button
+              onClick={toggleSideBar}
+              className="h-[34px] w-[34px] lg:hidden"
+            >
+              {!sideBarState && (
+                <Bars3BottomRightIcon className="text-dark-15" />
+              )}
+              {sideBarState && <XMarkIcon className="text-dark-15" />}
             </button>
           </div>
         </div>
+        <Sidebar visible={sideBarState} isLg={isLg} onClick={toggleSideBar} />
       </div>
     </nav>
   );

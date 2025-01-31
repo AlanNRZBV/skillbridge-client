@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { tempPath } from '../constants';
 
 interface Props extends React.PropsWithChildren {
   title: string;
   description: string;
-  link: string;
+  link?: string;
   controls?: boolean;
   onClick?: () => void;
   isMonthly?: boolean;
@@ -57,7 +58,7 @@ const Section: FC<Props> = ({
       ) : (
         <Link
           className={`self-start text-nowrap rounded-md border border-light-95 bg-light-99 px-5 py-[.875em] ${!isFaq ? 'sm:self-end' : ''} lg:px-6 lg:py-[1.125em] lg:text-lg`}
-          to={link}
+          to={link ? link : tempPath}
         >
           View All
         </Link>

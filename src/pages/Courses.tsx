@@ -3,6 +3,7 @@ import { useGetCoursesQuery } from '../features/course/courseApi.ts';
 import CourseCardExtended from '../components/Cards/CourseCardExtended.tsx';
 import PageHeading from '../components/PageHeading.tsx';
 import { Headings } from '../constants';
+import { changeCourseIndexToZero } from '../lib/utils.ts';
 
 const Courses = () => {
   const [courses, setCourses] = useState<ICourse[]>([]);
@@ -21,6 +22,8 @@ const Courses = () => {
   }, [isCoursesLoading, coursesResponse]);
 
   const isCoursesEmpty = courses.length === 0;
+
+  const rearrangedCourses = changeCourseIndexToZero(courses, 'UI/UX Design');
   return (
     <div className="container mx-auto my-[3.125em] lg:my-20 2xl:my-[8.25em]">
       <PageHeading
@@ -31,7 +34,7 @@ const Courses = () => {
         {isCoursesLoading && <span>Courses loading</span>}
         {courses &&
           !isCoursesEmpty &&
-          courses.map((item, index) => (
+          rearrangedCourses.map((item, index) => (
             <CourseCardExtended key={index} course={item} />
           ))}
         {isCoursesSuccess && isCoursesEmpty && <span>courses is empty</span>}

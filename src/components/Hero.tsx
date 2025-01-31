@@ -1,40 +1,9 @@
 import { Link } from 'react-router-dom';
 import { BoltIcon } from '@heroicons/react/16/solid';
-import { icons } from '../constants';
+import { HERO_CARDS_ARRAY, icons } from '../constants';
 import { useMediaQuery } from 'react-responsive';
 import ReactPlayer from 'react-player';
 import { useEffect, useState } from 'react';
-
-const CARDS_ARRAY = [
-  {
-    url: icons.zapier,
-    alt: 'zapier icon',
-  },
-  {
-    url: icons.amazon,
-    alt: 'amazon icon',
-  },
-  {
-    url: icons.spotify,
-    alt: 'spotify icon',
-  },
-  {
-    url: icons.zoom,
-    alt: 'zoom icon',
-  },
-  {
-    url: icons.adobe,
-    alt: 'adobe icon',
-  },
-  {
-    url: icons.notion,
-    alt: 'notion icon',
-  },
-  {
-    url: icons.netflix,
-    alt: 'netflix icon',
-  },
-];
 
 const Hero = () => {
   const isBelowSm = useMediaQuery({ query: '(max-width: 639px)' });
@@ -42,18 +11,18 @@ const Hero = () => {
     query: '(min-width: 640px) and (max-width: 1023px)',
   });
   const isAboveLg = useMediaQuery({ query: '(min-width: 1024px)' });
-  const [index, setIndex] = useState(CARDS_ARRAY.length);
+  const [index, setIndex] = useState(HERO_CARDS_ARRAY.length);
   useEffect(() => {
     if (isBelowSm) {
-      setIndex(3); // До 640px
+      setIndex(3);
       return;
     }
     if (isMdToLg) {
-      setIndex(5); // От 640px до 1024px
+      setIndex(5);
       return;
     }
     if (isAboveLg) {
-      setIndex(CARDS_ARRAY.length); // От 1024px и выше - начальный стейт
+      setIndex(HERO_CARDS_ARRAY.length);
       return;
     }
   }, [isBelowSm, isMdToLg, isAboveLg]);
@@ -88,17 +57,17 @@ const Hero = () => {
       </div>
       <div className="mb-[30px] flex justify-center gap-x-3 text-[14px] lg:mb-[100px]">
         <Link
-          to="#"
+          to="/courses"
           className="rounded-md bg-primary-50 px-5 py-[14px] text-white"
         >
           Explore Courses
         </Link>
-        <Link to="#" className="rounded-md bg-white px-5 py-[14px]">
+        <Link to="/pricing" className="rounded-md bg-white px-5 py-[14px]">
           View Pricing
         </Link>
       </div>
       <div className="mb-[30px] grid grid-cols-3 rounded-lg border border-light-95 bg-light-99 p-[10px] sm:grid-cols-5 lg:mb-[100px] lg:grid-cols-7 xl:p-[30px]">
-        {CARDS_ARRAY.slice(0, index).map((item, index) => (
+        {HERO_CARDS_ARRAY.slice(0, index).map((item, index) => (
           <div
             key={index}
             className="border-r border-light-95 px-[30px] py-5 last:border-0 lg:px-10 lg:py-[30px]"

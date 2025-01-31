@@ -3,6 +3,7 @@ import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/16/solid';
 export const iconUrl = `${import.meta.env.VITE_API_URL}/assets/icons/`;
 export const imageUrl = `${import.meta.env.VITE_API_URL}/assets/images/`;
 export const apiUrl = import.meta.env.VITE_API_URL as string;
+export const tempPath = `${import.meta.env.VITE_CONSTRUCTION_PATH}`;
 
 export const icons = {
   mainDesktop: `${iconUrl}/skillbridge-desktop.svg`,
@@ -219,6 +220,37 @@ export const Headings = {
       'Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.',
   },
 };
+
+export const HERO_CARDS_ARRAY = [
+  {
+    url: icons.zapier,
+    alt: 'zapier icon',
+  },
+  {
+    url: icons.amazon,
+    alt: 'amazon icon',
+  },
+  {
+    url: icons.spotify,
+    alt: 'spotify icon',
+  },
+  {
+    url: icons.zoom,
+    alt: 'zoom icon',
+  },
+  {
+    url: icons.adobe,
+    alt: 'adobe icon',
+  },
+  {
+    url: icons.notion,
+    alt: 'notion icon',
+  },
+  {
+    url: icons.netflix,
+    alt: 'netflix icon',
+  },
+];
 
 export const Lorem =
   'Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum eget habitasse in velit fringilla feugiat senectus in.';

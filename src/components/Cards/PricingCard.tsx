@@ -50,7 +50,7 @@ const PricingCard: FC<Props> = ({
           </ul>
         </div>
         <NavLink
-          to="/checkout"
+          to="/profile"
           className="rounded-b-[10px] bg-primary-50 px-6 py-[1.125em] text-center capitalize text-white xl:text-lg"
         >
           get started
