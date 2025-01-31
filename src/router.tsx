@@ -9,6 +9,7 @@ import Pricing from './pages/Pricing.tsx';
 import Contacts from './pages/Contacts.tsx';
 import Course from './components/Course.tsx';
 import Checkout from './pages/Checkout.tsx';
+import UnderConstruction from './pages/UnderConstruction.tsx';
 
 const router = createBrowserRouter(
   [
@@ -54,8 +55,12 @@ const router = createBrowserRouter(
           element: <Checkout />,
         },
         {
+          path: '/temporal-path',
+          element: <UnderConstruction />,
+        },
+        {
           path: '*',
-          element: <NotFound />, // Render inside the outlet for unmatched routers
+          element: <NotFound />,
         },
       ],
     },
