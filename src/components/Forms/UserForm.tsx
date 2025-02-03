@@ -18,7 +18,7 @@ interface ILoginState {
   password: string;
 }
 
-interface ISignUpState extends ILoginState {
+export interface ISignUpState extends ILoginState {
   firstName: string;
   lastName: string;
   profilePicture: string | undefined;
@@ -47,7 +47,7 @@ const UserForm: FC<Props> = ({ formType }) => {
   const [form, setForm] = useState<ILoginState | ISignUpState>(initialState);
 
   const [login, { error: LoginError }] = useLoginMutation();
-  const [signUp, { error: SignUpError }] = useSignUpMutation();
+  const [signUp, { error: _SignUpError }] = useSignUpMutation();
   const navigate = useNavigate();
 
   const notify = (arg: string) => toast(arg, { type: 'error' });

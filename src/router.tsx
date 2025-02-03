@@ -66,6 +66,7 @@ const router = createBrowserRouter(
     },
   ],
   {
+    basename: '/skillbridge-client',
     future: {
       v7_skipActionErrorRevalidation: true,
       v7_relativeSplatPath: true,
