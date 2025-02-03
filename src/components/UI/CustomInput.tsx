@@ -14,6 +14,7 @@ interface Props {
   name: string;
   value?: string | number | undefined;
   isPassword?: boolean;
+  isError?: boolean;
   style?: string;
 }
 const CustomInput: FC<Props> = ({
@@ -28,6 +29,7 @@ const CustomInput: FC<Props> = ({
   value,
   isPassword,
   style,
+  isError,
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -47,7 +49,9 @@ const CustomInput: FC<Props> = ({
       >
         {label}
       </label>
-      <div className="flex rounded-lg border border-light-95 bg-light-99 p-5 xl:p-6">
+      <div
+        className={`flex rounded-lg border border-light-95 bg-light-99 p-5 xl:p-6 ${isError ? 'border-red-300' : ''}`}
+      >
         <input
           onChange={onChange}
           placeholder={placeholder}
@@ -57,7 +61,7 @@ const CustomInput: FC<Props> = ({
           name={name}
           id={id}
           {...(type !== 'file' && { value })}
-          className="flex-grow appearance-none bg-transparent outline-0 placeholder:text-sm placeholder:capitalize placeholder:text-dark-40 lg:placeholder:text-base xl:placeholder:text-lg"
+          className={`flex-grow appearance-none bg-transparent outline-0 placeholder:text-sm placeholder:capitalize placeholder:text-dark-40 lg:placeholder:text-base xl:placeholder:text-lg`}
         />
         {type === 'password' &&
           (!isVisible ? (

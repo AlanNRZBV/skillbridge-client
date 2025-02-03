@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import CustomInput from '../UI/CustomInput.tsx';
 import { ArrowUpRightIcon, CheckIcon } from '@heroicons/react/16/solid';
 import { icons } from '../../constants';
@@ -7,6 +7,8 @@ import {
   useLoginMutation,
   useSignUpMutation,
 } from '../../features/user/userApi.ts';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 interface Props {
   formType: 'sign-up' | 'login';
@@ -16,6 +18,7 @@ interface ILoginState {
   email: string;
   password: string;
 }
+
 interface ISignUpState extends ILoginState {
   firstName: string;
   lastName: string;
@@ -45,8 +48,8 @@ const UserForm: FC<Props> = ({ formType }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [form, setForm] = useState<ILoginState | ISignUpState>(initialState);
 
-  const [login] = useLoginMutation();
-  const [signUp] = useSignUpMutation();
+  const [login, { error: LoginError }] = useLoginMutation();
+  const [signUp, { error: SignUpError }] = useSignUpMutation();
   const navigate = useNavigate();
 
   const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -76,9 +79,11 @@ const UserForm: FC<Props> = ({ formType }) => {
       signUp(formData);
     } else {
       try {
-        await login(form);
-        navigate('/');
-      } catch (e) {}
+        await login(form).unwrap();
+        // navigate('/');
+      } catch (e) {
+        console.log('=>(UserForm.tsx:83) error', e);
+      }
     }
     setForm(initialState);
   };
@@ -147,6 +152,9 @@ const UserForm: FC<Props> = ({ formType }) => {
           required
           id="userEmail"
           name="email"
+          isError={
+            LoginError && 'status' in LoginError && LoginError.status === 404
+          }
           value={form.email}
         />
         <CustomInput
@@ -159,6 +167,9 @@ const UserForm: FC<Props> = ({ formType }) => {
           name="password"
           isPassword
           value={form.password}
+          isError={
+            LoginError && 'status' in LoginError && LoginError.status === 404
+          }
         />
         {!isLogin && 'firstName' in form && (
           <>
