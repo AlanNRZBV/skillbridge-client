@@ -7,8 +7,7 @@ import {
   useLoginMutation,
   useSignUpMutation,
 } from '../../features/user/userApi.ts';
-import { SerializedError } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { toast } from 'react-toastify';
 
 interface Props {
   formType: 'sign-up' | 'login';
@@ -42,7 +41,6 @@ const signUpInitialState: ISignUpState = {
 
 const UserForm: FC<Props> = ({ formType }) => {
   const isLogin = formType === 'login';
-
   const initialState = isLogin ? loginInitialState : signUpInitialState;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -52,9 +50,19 @@ const UserForm: FC<Props> = ({ formType }) => {
   const [signUp, { error: SignUpError }] = useSignUpMutation();
   const navigate = useNavigate();
 
+  const notify = (arg: string) => toast(arg, { type: 'error' });
+
   const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
+
+  useEffect(() => {
+    if (LoginError && 'status' in LoginError && LoginError.status === 404) {
+      const msg = LoginError.data as { message: string };
+
+      notify(msg.message);
+    }
+  }, [LoginError]);
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,8 +87,8 @@ const UserForm: FC<Props> = ({ formType }) => {
       signUp(formData);
     } else {
       try {
-        await login(form).unwrap();
-        // navigate('/');
+        await login(form);
+        navigate('/');
       } catch (e) {
         console.log('=>(UserForm.tsx:83) error', e);
       }

@@ -145,3 +145,14 @@ declare interface ICourseResponse extends ApiResponse {
 declare interface IAboutResponse extends ApiResponse {
   aboutData: IAboutData;
 }
+
+declare interface IErrorApiResponse {
+  status: number;
+  data: {
+    message: string;
+    e?: {
+      filter: {};
+      query: {};
+    };
+  };
+}
