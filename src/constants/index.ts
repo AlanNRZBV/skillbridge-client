@@ -2,26 +2,26 @@ import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/16/solid';
 
 export const apiUrl = `${import.meta.env.VITE_API_URL}`;
 
-export const iconUrl = `${import.meta.env.VITE_API_URL}/assets/icons`;
-export const imageUrl = `${import.meta.env.VITE_API_URL}/assets/images`;
+export const iconUrl = `${import.meta.env.VITE_API_URL}/assets/icons/`;
+export const imageUrl = `${import.meta.env.VITE_API_URL}/assets/images/`;
 export const tempPath = `${import.meta.env.VITE_CONSTRUCTION_PATH}`;
 
 export const icons = {
-  mainDesktop: `${iconUrl}/skillbridge-desktop.svg`,
-  mainLaptop: `${iconUrl}/skillbridge-Laptop.svg`,
-  mainMobile: `${iconUrl}/skillbridge-Mobile.svg`,
-  facebook: `${iconUrl}/icon-facebook.png`,
-  twitter: `${iconUrl}/icon-twitter.png`,
-  linkedin: `${iconUrl}/icon-linkedin.png`,
-  abstractLines: `${iconUrl}/insight-element.svg`,
-  zapier: `${iconUrl}/icon-zapier.svg`,
-  spotify: `${iconUrl}/icon-spotify.svg`,
-  zoom: `${iconUrl}/icon-zoom.svg`,
-  amazon: `${iconUrl}/icon-amazon.svg`,
-  adobe: `${iconUrl}/icon-adobe.svg`,
-  notion: `${iconUrl}/icon-notion.svg`,
-  netflix: `${iconUrl}/icon-netflix.svg`,
-  googleSignUp: `${iconUrl}/icon-google-sign-up.svg`,
+  mainDesktop: `${iconUrl}skillbridge-desktop.svg`,
+  mainLaptop: `${iconUrl}skillbridge-laptop.svg`,
+  mainMobile: `${iconUrl}skillbridge-mobile.svg`,
+  facebook: `${iconUrl}icon-facebook.png`,
+  twitter: `${iconUrl}icon-twitter.png`,
+  linkedin: `${iconUrl}icon-linkedin.png`,
+  abstractLines: `${iconUrl}insight-element.svg`,
+  zapier: `${iconUrl}icon-zapier.svg`,
+  spotify: `${iconUrl}icon-spotify.svg`,
+  zoom: `${iconUrl}icon-zoom.svg`,
+  amazon: `${iconUrl}icon-amazon.svg`,
+  adobe: `${iconUrl}icon-adobe.svg`,
+  notion: `${iconUrl}icon-notion.svg`,
+  netflix: `${iconUrl}icon-netflix.svg`,
+  googleSignUp: `${iconUrl}icon-google-sign-up.svg`,
 };
 
 export const paths = [
