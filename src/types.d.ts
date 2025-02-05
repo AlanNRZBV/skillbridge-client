@@ -43,6 +43,11 @@ declare interface IUser {
   profilePicture: File | undefined;
 }
 
+declare interface IUserResponse extends ApiResponse {
+  message: string;
+  user: IUser;
+}
+
 declare interface IUserPopulated {
   _id: string;
   firstName: string;

@@ -7,7 +7,7 @@ import {
   useLoginMutation,
   useSignUpMutation,
 } from '../../features/user/userApi.ts';
-import { toast } from 'react-toastify';
+import { toast, TypeOptions } from 'react-toastify';
 
 interface Props {
   formType: 'sign-up' | 'login';
@@ -46,23 +46,32 @@ const UserForm: FC<Props> = ({ formType }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [form, setForm] = useState<ILoginState | ISignUpState>(initialState);
 
-  const [login, { error: LoginError }] = useLoginMutation();
-  const [signUp, { error: _SignUpError }] = useSignUpMutation();
+  const [login, { error: loginError, isSuccess: isLoginSuccess }] =
+    useLoginMutation();
+  const [
+    signUp,
+    { error: _SignUpError, isSuccess: isSignUpSuccess, data: signUpResponse },
+  ] = useSignUpMutation();
   const navigate = useNavigate();
 
-  const notify = (arg: string) => toast(arg, { type: 'error' });
+  const notify = (arg: string, type: TypeOptions) => toast(arg, { type: type });
 
   const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
 
   useEffect(() => {
-    if (LoginError && 'status' in LoginError && LoginError.status === 404) {
-      const msg = LoginError.data as { message: string };
+    if (loginError && 'status' in loginError && loginError.status === 404) {
+      const msg = loginError.data as { message: string };
 
-      notify(msg.message);
+      notify(msg.message, 'error');
     }
-  }, [LoginError]);
+    if (isSignUpSuccess) {
+      const msg = signUpResponse.message;
+      notify(msg, 'success');
+      navigate('/login');
+    }
+  }, [loginError, isSignUpSuccess]);
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,7 +97,9 @@ const UserForm: FC<Props> = ({ formType }) => {
     } else {
       try {
         await login(form);
-        navigate('/');
+        if (isLoginSuccess) {
+          navigate('/');
+        }
       } catch (e) {
         console.log('=>(UserForm.tsx:83) error', e);
       }
@@ -161,7 +172,7 @@ const UserForm: FC<Props> = ({ formType }) => {
           id="userEmail"
           name="email"
           isError={
-            LoginError && 'status' in LoginError && LoginError.status === 404
+            loginError && 'status' in loginError && loginError.status === 404
           }
           value={form.email}
         />
@@ -176,7 +187,7 @@ const UserForm: FC<Props> = ({ formType }) => {
           isPassword
           value={form.password}
           isError={
-            LoginError && 'status' in LoginError && LoginError.status === 404
+            loginError && 'status' in loginError && loginError.status === 404
           }
         />
         {!isLogin && 'firstName' in form && (

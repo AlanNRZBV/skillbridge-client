@@ -2,7 +2,7 @@ import { api } from '../../api/api.ts';
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    signUp: builder.mutation<IUser, FormData>({
+    signUp: builder.mutation<IUserResponse, FormData>({
       query: (formData) => ({
         body: formData,
         url: '/users/register',
