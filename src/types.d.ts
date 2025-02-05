@@ -44,8 +44,26 @@ declare interface IUser {
 }
 
 declare interface IUserResponse extends ApiResponse {
-  message: string;
   user: IUser;
+}
+
+declare interface IUserUniqueErrorResponse {
+  errorResponse: {
+    code: number;
+    keyValue: {
+      email: string;
+    };
+  };
+}
+
+declare interface IUserMongoErrorResponse {
+  errors: {
+    [key: string]: {
+      properties: {
+        message: string;
+      };
+    };
+  };
 }
 
 declare interface IUserPopulated {

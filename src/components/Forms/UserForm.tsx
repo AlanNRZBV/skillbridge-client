@@ -46,11 +46,13 @@ const UserForm: FC<Props> = ({ formType }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [form, setForm] = useState<ILoginState | ISignUpState>(initialState);
 
-  const [login, { error: loginError, isSuccess: isLoginSuccess }] =
-    useLoginMutation();
+  const [
+    login,
+    { error: loginError, isSuccess: isLoginSuccess, data: loginResponse },
+  ] = useLoginMutation();
   const [
     signUp,
-    { error: _SignUpError, isSuccess: isSignUpSuccess, data: signUpResponse },
+    { error: signUpError, isSuccess: isSignUpSuccess, data: signUpResponse },
   ] = useSignUpMutation();
   const navigate = useNavigate();
 
@@ -62,16 +64,47 @@ const UserForm: FC<Props> = ({ formType }) => {
 
   useEffect(() => {
     if (loginError && 'status' in loginError && loginError.status === 404) {
-      const msg = loginError.data as { message: string };
+      const error = loginError.data as { message: string };
 
-      notify(msg.message, 'error');
+      notify(error.message, 'error');
     }
-    if (isSignUpSuccess) {
+    if (isLoginSuccess) {
+      const msg = loginResponse.message;
+
+      notify(msg, 'success');
+    }
+    if (isSignUpSuccess && !('errorResponse' in signUpResponse)) {
       const msg = signUpResponse.message;
       notify(msg, 'success');
       navigate('/login');
     }
-  }, [loginError, isSignUpSuccess]);
+    if (signUpResponse && 'errorResponse' in signUpResponse) {
+      const {
+        errorResponse: {
+          keyValue: { email },
+        },
+      } = signUpResponse as IUserUniqueErrorResponse;
+
+      notify(`User with email:${email} Already exists`, 'error');
+    }
+    if (signUpError && 'status' in signUpError) {
+      const {
+        errors: {
+          password: {
+            properties: { message },
+          },
+        },
+      } = signUpError.data as IUserMongoErrorResponse;
+
+      notify(message, 'error');
+    }
+  }, [
+    loginError,
+    isSignUpSuccess,
+    signUpResponse?.message,
+    navigate,
+    signUpError,
+  ]);
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
