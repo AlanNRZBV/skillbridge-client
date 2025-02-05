@@ -5,7 +5,6 @@ export const apiUrl = `${import.meta.env.VITE_API_URL}`;
 export const iconUrl = `${import.meta.env.VITE_API_URL}/assets/icons/`;
 export const imageUrl = `${import.meta.env.VITE_API_URL}/assets/images/`;
 export const tempPath = `${import.meta.env.VITE_CONSTRUCTION_PATH}`;
-
 export const icons = {
   mainDesktop: `${iconUrl}skillbridge-desktop.svg`,
   mainLaptop: `${iconUrl}skillbridge-laptop.svg`,
