@@ -66,7 +66,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/',
+    basename: `${import.meta.env.VITE_ROUTER_BASENAME}`,
     future: {
       v7_skipActionErrorRevalidation: true,
       v7_relativeSplatPath: true,
