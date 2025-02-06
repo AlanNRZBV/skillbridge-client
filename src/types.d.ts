@@ -77,6 +77,18 @@ declare type IUserMutation = Omit<IUser, '_id'> & {
   password: string;
 };
 
+declare interface ILoginState {
+  email: string;
+  password: string;
+}
+
+declare interface ISignUpState extends ILoginState {
+  firstName: string;
+  lastName: string;
+  profilePicture: string | undefined;
+}
+declare type SignUpOmitState = Omit<ISignUpState, 'profilePicture'>;
+
 declare interface ICourse {
   _id: string;
   title: string;

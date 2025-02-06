@@ -8,24 +8,15 @@ import {
   useSignUpMutation,
 } from '../../features/user/userApi.ts';
 import { toast, TypeOptions } from 'react-toastify';
-import { userSignUpSchema } from '../../zod/userSignUpSchema.ts';
+import {
+  userLoginSchema,
+  userSignUpSchema,
+} from '../../zod/userSignUpSchema.ts';
 import { ZodError, ZodIssue } from 'zod';
 
 interface Props {
   formType: 'sign-up' | 'login';
 }
-
-interface ILoginState {
-  email: string;
-  password: string;
-}
-
-export interface ISignUpState extends ILoginState {
-  firstName: string;
-  lastName: string;
-  profilePicture: string | undefined;
-}
-export type SignUpOmitState = Omit<ISignUpState, 'profilePicture'>;
 
 const loginInitialState: ILoginState = {
   email: '',
@@ -131,18 +122,30 @@ const UserForm: FC<Props> = ({ formType }) => {
       });
 
       try {
-        userSignUpSchema.parse(form);
-      } catch (e) {
-        if (e instanceof ZodError) {
-          setValidationErrors(e.errors);
-          return;
+        try {
+          userSignUpSchema.parse(form);
+        } catch (e) {
+          if (e instanceof ZodError) {
+            setValidationErrors(e.errors);
+            return;
+          }
+          console.log('=>(UserForm.tsx:158) e', e);
         }
-        console.log('=>(UserForm.tsx:158) e', e);
+        await signUp(formData);
+      } catch (e) {
+        console.log('=>(UserForm.tsx:135) e', e);
       }
-
-      signUp(formData);
     } else {
       try {
+        try {
+          userLoginSchema.parse(form);
+        } catch (e) {
+          if (e instanceof ZodError) {
+            setValidationErrors(e.errors);
+            return;
+          }
+          console.log('=>(UserForm.tsx:147) e', e);
+        }
         await login(form);
         if (isLoginSuccess) {
           navigate('/');
@@ -152,24 +155,6 @@ const UserForm: FC<Props> = ({ formType }) => {
       }
     }
     setForm(initialState);
-  };
-
-  useEffect(() => {
-    if (validationErrors.length !== 0) {
-      console.log('=>(UserForm.tsx:149) validationErrors', validationErrors);
-    }
-  }, [validationErrors]);
-
-  const testFn = async () => {
-    try {
-      userSignUpSchema.parse(form);
-    } catch (e) {
-      if (e instanceof ZodError) {
-        setValidationErrors(e.errors);
-        return;
-      }
-      console.log('=>(UserForm.tsx:158) e', e);
-    }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -213,6 +198,7 @@ const UserForm: FC<Props> = ({ formType }) => {
               label="first name"
               id="firstName"
               name="firstName"
+              required
               value={form.firstName}
               validationErrors={validationErrors}
             />
@@ -295,13 +281,6 @@ const UserForm: FC<Props> = ({ formType }) => {
           className="appearance-none rounded-md bg-primary-50 px-[.625em] py-[.875em] text-center text-sm font-medium capitalize text-white xl:px-5 xl:py-[1.125em] xl:text-lg"
         >
           {isLogin ? 'login' : 'sign up'}
-        </button>
-        <button
-          onClick={testFn}
-          type="button"
-          className="appearance-none rounded-md bg-primary-50 px-[.625em] py-[.875em] text-center text-sm font-medium capitalize text-white xl:px-5 xl:py-[1.125em] xl:text-lg"
-        >
-          test
         </button>
       </form>
       <div className="flex items-center gap-x-3">
