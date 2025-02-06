@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
 import { NavLink, useLocation } from 'react-router-dom';
+import { ZodIssue } from 'zod';
 
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,6 +17,7 @@ interface Props {
   isPassword?: boolean;
   isError?: boolean;
   style?: string;
+  validationErrors: ZodIssue[];
 }
 const CustomInput: FC<Props> = ({
   placeholder,
@@ -30,6 +32,7 @@ const CustomInput: FC<Props> = ({
   isPassword,
   style,
   isError,
+  validationErrors,
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -39,6 +42,7 @@ const CustomInput: FC<Props> = ({
 
   const { pathname } = useLocation();
 
+  const isValidationErrorsExist = validationErrors.length === 0;
   return (
     <div
       className={`flex flex-col gap-y-[.625em] xl:gap-y-[.875em] ${style ? style : ''}`}
@@ -70,6 +74,16 @@ const CustomInput: FC<Props> = ({
             <EyeSlashIcon onClick={handleShow} className="h-5 w-5" />
           ))}
       </div>
+      {!isValidationErrorsExist &&
+        validationErrors.map((item, index) => {
+          if (item.path[0] === name) {
+            return (
+              <span className="self-end text-sm text-red-400" key={index}>
+                {item.message}
+              </span>
+            );
+          }
+        })}
       {isPassword && pathname === '/login' && (
         <NavLink
           className="self-end text-sm text-dark-30 lg:text-base xl:text-lg"

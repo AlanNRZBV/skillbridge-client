@@ -8,6 +8,8 @@ import {
   useSignUpMutation,
 } from '../../features/user/userApi.ts';
 import { toast, TypeOptions } from 'react-toastify';
+import { userSignUpSchema } from '../../zod/userSignUpSchema.ts';
+import { ZodError, ZodIssue } from 'zod';
 
 interface Props {
   formType: 'sign-up' | 'login';
@@ -23,6 +25,7 @@ export interface ISignUpState extends ILoginState {
   lastName: string;
   profilePicture: string | undefined;
 }
+export type SignUpOmitState = Omit<ISignUpState, 'profilePicture'>;
 
 const loginInitialState: ILoginState = {
   email: '',
@@ -45,7 +48,7 @@ const UserForm: FC<Props> = ({ formType }) => {
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [form, setForm] = useState<ILoginState | ISignUpState>(initialState);
-
+  const [validationErrors, setValidationErrors] = useState<ZodIssue[]>([]);
   const [
     login,
     { error: loginError, isSuccess: isLoginSuccess, data: loginResponse },
@@ -101,9 +104,10 @@ const UserForm: FC<Props> = ({ formType }) => {
   }, [
     loginError,
     isSignUpSuccess,
-    signUpResponse?.message,
     navigate,
     signUpError,
+    isLoginSuccess,
+    signUpResponse,
   ]);
 
   const submitHandler = async (e: React.FormEvent) => {
@@ -126,6 +130,16 @@ const UserForm: FC<Props> = ({ formType }) => {
         }
       });
 
+      try {
+        userSignUpSchema.parse(form);
+      } catch (e) {
+        if (e instanceof ZodError) {
+          setValidationErrors(e.errors);
+          return;
+        }
+        console.log('=>(UserForm.tsx:158) e', e);
+      }
+
       signUp(formData);
     } else {
       try {
@@ -138,6 +152,24 @@ const UserForm: FC<Props> = ({ formType }) => {
       }
     }
     setForm(initialState);
+  };
+
+  useEffect(() => {
+    if (validationErrors.length !== 0) {
+      console.log('=>(UserForm.tsx:149) validationErrors', validationErrors);
+    }
+  }, [validationErrors]);
+
+  const testFn = async () => {
+    try {
+      userSignUpSchema.parse(form);
+    } catch (e) {
+      if (e instanceof ZodError) {
+        setValidationErrors(e.errors);
+        return;
+      }
+      console.log('=>(UserForm.tsx:158) e', e);
+    }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,10 +211,10 @@ const UserForm: FC<Props> = ({ formType }) => {
               type="text"
               placeholder="enter your name"
               label="first name"
-              required
               id="firstName"
               name="firstName"
               value={form.firstName}
+              validationErrors={validationErrors}
             />
             <CustomInput
               onChange={onChange}
@@ -193,6 +225,7 @@ const UserForm: FC<Props> = ({ formType }) => {
               id="lastName"
               name="lastName"
               value={form.lastName}
+              validationErrors={validationErrors}
             />
           </>
         )}
@@ -208,6 +241,7 @@ const UserForm: FC<Props> = ({ formType }) => {
             loginError && 'status' in loginError && loginError.status === 404
           }
           value={form.email}
+          validationErrors={validationErrors}
         />
         <CustomInput
           onChange={onChange}
@@ -219,6 +253,7 @@ const UserForm: FC<Props> = ({ formType }) => {
           name="password"
           isPassword
           value={form.password}
+          validationErrors={validationErrors}
           isError={
             loginError && 'status' in loginError && loginError.status === 404
           }
@@ -226,6 +261,7 @@ const UserForm: FC<Props> = ({ formType }) => {
         {!isLogin && 'firstName' in form && (
           <>
             <CustomInput
+              validationErrors={validationErrors}
               onChange={onChange}
               type="file"
               placeholder="Add profile picture"
@@ -259,6 +295,13 @@ const UserForm: FC<Props> = ({ formType }) => {
           className="appearance-none rounded-md bg-primary-50 px-[.625em] py-[.875em] text-center text-sm font-medium capitalize text-white xl:px-5 xl:py-[1.125em] xl:text-lg"
         >
           {isLogin ? 'login' : 'sign up'}
+        </button>
+        <button
+          onClick={testFn}
+          type="button"
+          className="appearance-none rounded-md bg-primary-50 px-[.625em] py-[.875em] text-center text-sm font-medium capitalize text-white xl:px-5 xl:py-[1.125em] xl:text-lg"
+        >
+          test
         </button>
       </form>
       <div className="flex items-center gap-x-3">
