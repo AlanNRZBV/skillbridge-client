@@ -4,6 +4,8 @@ import { ContactCards, Headings } from '../constants';
 import ContactCard from '../components/Cards/ContactCard.tsx';
 import { useCreateMessageMutation } from '../features/contact/contactApi.ts';
 import PageHeading from '../components/PageHeading.tsx';
+import { ZodError, ZodIssue } from 'zod';
+import { userMessageSchema } from '../zod/userSchemes.ts';
 
 interface IMessageState {
   firstName: string;
@@ -25,6 +27,7 @@ const initialState: IMessageState = {
 
 const Contacts = () => {
   const [form, setForm] = useState<IMessageState>(initialState);
+  const [validationErrors, setValidationErrors] = useState<ZodIssue[]>([]);
 
   const [createMessage] = useCreateMessageMutation();
 
@@ -52,9 +55,17 @@ const Contacts = () => {
       userData: userData,
     };
 
+    try {
+      userMessageSchema.parse(form);
+    } catch (e) {
+      if (e instanceof ZodError) {
+        setValidationErrors(e.errors);
+        return;
+      }
+      console.log('=>(Contacts.tsx:66) ');
+    }
     createMessage(message);
-
-    // setForm(initialState);
+    setForm(initialState);
   };
 
   return (
@@ -78,6 +89,7 @@ const Contacts = () => {
               name="firstName"
               value={form.firstName}
               required
+              validationErrors={validationErrors}
             />
             <CustomInput
               onChange={onChange}
@@ -88,6 +100,7 @@ const Contacts = () => {
               name="lastName"
               value={form.lastName}
               required
+              validationErrors={validationErrors}
             />
             <CustomInput
               onChange={onChange}
@@ -98,6 +111,7 @@ const Contacts = () => {
               name="email"
               value={form.email}
               required
+              validationErrors={validationErrors}
             />
             <CustomInput
               onChange={onChange}
@@ -108,6 +122,7 @@ const Contacts = () => {
               name="phoneNumber"
               value={form.phoneNumber}
               required
+              validationErrors={validationErrors}
             />
             <CustomInput
               onChange={onChange}
@@ -119,6 +134,7 @@ const Contacts = () => {
               value={form.subject}
               style="md:col-span-2"
               required
+              validationErrors={validationErrors}
             />
             <CustomInput
               onChange={onChange}
@@ -130,6 +146,7 @@ const Contacts = () => {
               style="md:col-span-2"
               value={form.message}
               required
+              validationErrors={validationErrors}
             />
             <div className="flex grow justify-center md:col-span-2">
               <button

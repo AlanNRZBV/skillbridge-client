@@ -8,10 +8,7 @@ import {
   useSignUpMutation,
 } from '../../features/user/userApi.ts';
 import { toast, TypeOptions } from 'react-toastify';
-import {
-  userLoginSchema,
-  userSignUpSchema,
-} from '../../zod/userSignUpSchema.ts';
+import { userLoginSchema, userSignUpSchema } from '../../zod/userSchemes.ts';
 import { ZodError, ZodIssue } from 'zod';
 
 interface Props {
