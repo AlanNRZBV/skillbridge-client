@@ -4,6 +4,7 @@ import { ArrowUpRightIcon, CheckIcon } from '@heroicons/react/16/solid';
 import { icons } from '../../constants';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
+  useGetCurrentUserQuery,
   useLoginMutation,
   useSignUpMutation,
 } from '../../features/user/userApi.ts';
@@ -45,6 +46,13 @@ const UserForm: FC<Props> = ({ formType }) => {
     signUp,
     { error: signUpError, isSuccess: isSignUpSuccess, data: signUpResponse },
   ] = useSignUpMutation();
+  const { data } = useGetCurrentUserQuery();
+
+  useEffect(() => {
+    if (data) {
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   const notify = (arg: string, type: TypeOptions) => toast(arg, { type: type });
@@ -98,6 +106,12 @@ const UserForm: FC<Props> = ({ formType }) => {
     signUpResponse,
   ]);
 
+  useEffect(() => {
+    if (isLoginSuccess) {
+      navigate('/');
+    }
+  }, [isLoginSuccess, navigate]);
+
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -144,9 +158,6 @@ const UserForm: FC<Props> = ({ formType }) => {
           console.log('=>(UserForm.tsx:147) e', e);
         }
         await login(form);
-        if (isLoginSuccess) {
-          navigate('/');
-        }
       } catch (e) {
         console.log('=>(UserForm.tsx:83) error', e);
       }

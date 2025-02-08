@@ -10,6 +10,7 @@ import Contacts from './pages/Contacts.tsx';
 import Course from './components/Course.tsx';
 import Profile from './pages/Profile.tsx';
 import UnderConstruction from './pages/UnderConstruction.tsx';
+import VerifiedUserGuard from './components/RouteGuards/VerifiedUserGuard.tsx';
 
 const router = createBrowserRouter(
   [
@@ -24,11 +25,19 @@ const router = createBrowserRouter(
         },
         {
           path: '/sign-up',
-          element: <UserFormContainer key="/sign-up" />,
+          element: (
+            <VerifiedUserGuard redirectTo={'/'}>
+              <UserFormContainer key="/sign-up" />
+            </VerifiedUserGuard>
+          ),
         },
         {
           path: '/login',
-          element: <UserFormContainer key="/login" />,
+          element: (
+            <VerifiedUserGuard redirectTo={'/'}>
+              <UserFormContainer key="/login" />
+            </VerifiedUserGuard>
+          ),
         },
         {
           path: '/courses',
