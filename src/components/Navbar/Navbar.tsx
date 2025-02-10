@@ -5,7 +5,7 @@ import { Bars3BottomRightIcon } from '@heroicons/react/24/outline';
 import { useGetCurrentUserQuery } from '../../features/user/userApi.ts';
 import CurrentUser from './CurrentUser.tsx';
 import Sidebar from '../Sidebar.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { XMarkIcon } from '@heroicons/react/16/solid';
 
@@ -15,11 +15,21 @@ const Navbar = () => {
   const isLg = useMediaQuery({ minWidth: 1024 });
 
   const { pathname } = useLocation();
-  const { data, isError } = useGetCurrentUserQuery();
+  const {
+    data: currentUserResponse,
+    isError,
+    isLoading,
+  } = useGetCurrentUserQuery();
 
   const toggleSideBar = () => {
     setSideBarState((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    if (currentUserResponse && !isLoading) {
+      console.log('=>(Navbar.tsx:27) currentUserResponse', currentUserResponse);
+    }
+  }, [currentUserResponse, isLoading]);
 
   const loginAndSignUp = (
     <>
@@ -63,26 +73,29 @@ const Navbar = () => {
             />
           </NavLink>
           <div className="mr-auto hidden items-center gap-x-[26px] text-[14px] text-dark-15 lg:flex xl:text-[18px]">
-            {paths.map((item, index) => (
-              <NavLink
-                key={index}
-                to={item.path}
-                className={({ isActive }) =>
-                  !isActive
-                    ? 'rounded-md px-5 py-3 transition duration-200 hover:bg-light-95'
-                    : 'rounded-md bg-light-95 px-5 py-3 transition duration-200 hover:bg-transparent'
-                }
-              >
-                {item.title}
-              </NavLink>
-            ))}
+            {paths.map((item, index) => {
+              if (item.title === 'Profile') {
+                return null;
+              }
+              return (
+                <NavLink
+                  key={index}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    !isActive
+                      ? 'rounded-md px-5 py-3 transition duration-200 hover:bg-light-95'
+                      : 'rounded-md bg-light-95 px-5 py-3 transition duration-200 hover:bg-transparent'
+                  }
+                >
+                  {item.title}
+                </NavLink>
+              );
+            })}
           </div>
-          <div className="flex gap-x-5 text-[14px] text-dark-15 xl:text-[18px]">
-            {data && !isError ? (
-              <CurrentUser user={data.user} />
-            ) : (
-              loginAndSignUp
-            )}
+          <div className="flex items-center gap-x-5 text-[14px] text-dark-15 xl:text-[18px]">
+            {currentUserResponse && !isError
+              ? isLg && <CurrentUser user={currentUserResponse.user} />
+              : loginAndSignUp}
             <button
               onClick={toggleSideBar}
               className="h-[34px] w-[34px] lg:hidden"
@@ -94,7 +107,12 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        <Sidebar visible={sideBarState} isLg={isLg} onClick={toggleSideBar} />
+        <Sidebar
+          user={currentUserResponse?.user}
+          visible={sideBarState}
+          isLg={isLg}
+          onClick={toggleSideBar}
+        />
       </div>
     </nav>
   );

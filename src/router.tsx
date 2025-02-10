@@ -60,7 +60,7 @@ const router = createBrowserRouter(
           element: <Contacts />,
         },
         {
-          path: '/profile',
+          path: '/profile/:id',
           element: <Profile />,
         },
         {

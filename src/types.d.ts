@@ -43,6 +43,13 @@ declare interface IUser {
   profilePicture: File | undefined;
 }
 
+declare interface IUserFromApi {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  profilePicture: string | undefined;
+}
+
 declare interface IUserResponse extends ApiResponse {
   user: IUser;
 }
@@ -87,7 +94,6 @@ declare interface ISignUpState extends ILoginState {
   lastName: string;
   profilePicture: string | undefined;
 }
-declare type SignUpOmitState = Omit<ISignUpState, 'profilePicture'>;
 
 declare interface ICourse {
   _id: string;
@@ -166,7 +172,7 @@ declare interface IPricingPlanResponse extends ApiResponse {
 }
 
 declare interface ILoginResponse extends ApiResponse {
-  user: IUser;
+  user: IUserFromApi;
 }
 
 declare interface ICoursesResponse extends ApiResponse {

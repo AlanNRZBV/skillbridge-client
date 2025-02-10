@@ -44,6 +44,10 @@ export const paths = [
     title: 'Contact',
     path: '/contact',
   },
+  {
+    title: 'Profile',
+    path: '/Profile',
+  },
 ];
 
 export const footerLinks = [

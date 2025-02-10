@@ -24,7 +24,7 @@ export const userApi = api.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
-    getCurrentUser: builder.query<ILoginResponse, void>({
+    getCurrentUser: builder.query<any, void>({
       query: () => ({
         url: '/users/current',
         method: 'GET',
