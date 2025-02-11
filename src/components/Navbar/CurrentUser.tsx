@@ -5,7 +5,7 @@ import {
   ArrowRightStartOnRectangleIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 interface Props {
   user: IUserFromApi;
@@ -14,10 +14,12 @@ interface Props {
 const CurrentUser: FC<Props> = ({ user }) => {
   const [logout] = useLogOutMutation();
   const { profilePicture, firstName, lastName, _id } = user;
+  const navigate = useNavigate();
 
   const logOutHandler = async () => {
     try {
       await logout();
+      navigate('/');
     } catch (e) {
       console.log('=>(CurrentUser.tsx:16) e', e);
     }

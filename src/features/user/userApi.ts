@@ -22,6 +22,9 @@ export const userApi = api.injectEndpoints({
         url: '/users/logout',
         method: 'POST',
       }),
+      onQueryStarted: () => {
+        userApi.util.resetApiState();
+      },
       invalidatesTags: ['User'],
     }),
     getCurrentUser: builder.query<ILoginResponse, void>({
@@ -33,7 +36,7 @@ export const userApi = api.injectEndpoints({
     }),
     getSelf: builder.query<IFullUserResponse, string>({
       query: (arg: string) => ({
-        url: `/users/${arg}`,
+        url: `/users/self/${arg}`,
         method: 'GET',
       }),
     }),
@@ -46,4 +49,5 @@ export const {
   useLoginMutation,
   useGetCurrentUserQuery,
   useLogOutMutation,
+  useGetSelfQuery,
 } = userApi;

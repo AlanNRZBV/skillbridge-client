@@ -7,9 +7,12 @@ interface Props extends React.PropsWithChildren {
 }
 
 const VerifiedUserGuard: FC<Props> = ({ redirectTo, children }) => {
-  const { data } = useGetCurrentUserQuery();
-
+  const isTokenExists = document.cookie.includes('accessToken');
+  const { data, isLoading } = useGetCurrentUserQuery(undefined, {
+    skip: !isTokenExists,
+  });
   if (data) {
+    console.log('=>(VerifiedUserGuard.tsx:15) data', data);
     return <Navigate to={redirectTo} replace />;
   }
 

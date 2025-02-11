@@ -1,12 +1,16 @@
-import { useGetCurrentUserQuery } from '../features/user/userApi.ts';
+import { useGetSelfQuery } from '../features/user/userApi.ts';
+import { useParams } from 'react-router-dom';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { apiUrl } from '../constants';
 
 const Profile = () => {
+  const { id } = useParams();
   const {
     data: userResponse,
     isLoading,
     isSuccess,
     isError,
-  } = useGetCurrentUserQuery();
+  } = useGetSelfQuery(id ? id : skipToken);
 
   let content;
 
@@ -18,9 +22,26 @@ const Profile = () => {
     content = <div>Error occurred during data loading</div>;
   }
 
-  if (isSuccess) {
-    const { user } = userResponse;
-    content = <div></div>;
+  if (userResponse && isSuccess) {
+    const {
+      user: {
+        firstName,
+        lastName,
+        email,
+        profilePicture,
+        updatedAt,
+        createdAt,
+      },
+    } = userResponse;
+    content = (
+      <div>
+        <div>
+          <div>
+            <img src={`${apiUrl}${profilePicture}`} alt={firstName} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

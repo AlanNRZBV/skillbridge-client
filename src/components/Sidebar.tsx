@@ -1,5 +1,5 @@
 import { paths } from '../constants';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FC } from 'react';
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/react/24/outline';
 import {
@@ -16,6 +16,7 @@ interface Props {
 const Sidebar: FC<Props> = ({ visible, isLg, onClick }) => {
   const [logout] = useLogOutMutation();
   const { data: currentUserData, isError } = useGetCurrentUserQuery();
+  const navigate = useNavigate();
 
   let userId: string;
 
@@ -26,6 +27,8 @@ const Sidebar: FC<Props> = ({ visible, isLg, onClick }) => {
   const logOutHandler = async () => {
     try {
       await logout();
+      onClick();
+      navigate('/');
     } catch (e) {
       console.log('=>(CurrentUser.tsx:16) e', e);
     }
@@ -55,13 +58,10 @@ const Sidebar: FC<Props> = ({ visible, isLg, onClick }) => {
         })}
         {currentUserData?.user && (
           <button
-            className="flex justify-center rounded-md border border-light-95 px-5 py-3 transition duration-200 hover:bg-transparent"
-            onClick={onClick}
+            onClick={logOutHandler}
+            className="flex justify-center rounded-md border border-light-95 px-5 py-3 transition duration-200 hover:bg-primary-50"
           >
-            <div
-              onClick={logOutHandler}
-              className="h-[35px] w-[35px] rounded-sm p-1"
-            >
+            <div className="h-[35px] w-[35px] rounded-sm p-1">
               <ArrowRightStartOnRectangleIcon />
             </div>
           </button>

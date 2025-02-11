@@ -193,6 +193,6 @@ declare interface IAboutResponse extends ApiResponse {
   aboutData: IAboutData;
 }
 
-declare interface IFullUserResponse {
+declare interface IFullUserResponse extends ApiResponse {
   user: IFullUserFromApi;
 }

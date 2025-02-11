@@ -1,17 +1,26 @@
 import SmallTestimonials from '../components/Testimonials/SmallTestimonials.tsx';
 import UserForm from '../components/Forms/UserForm.tsx';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { useGetCurrentUserQuery } from '../features/user/userApi.ts';
 
 const UserFormContainer = () => {
   const { pathname } = useLocation();
+  const isLg = useMediaQuery({ minWidth: 1024 });
+  const isTokenExists = document.cookie.includes('accessToken');
+  const { data } = useGetCurrentUserQuery(undefined, {
+    skip: !isTokenExists,
+  });
 
   const greetingString =
     pathname === '/login'
       ? 'Welcome back! Please log in to access your account.'
       : 'Create an account to unlock exclusive features.';
 
-  const isLg = useMediaQuery({ minWidth: 1024 });
+  if (data) {
+    console.log('=>(UserFormContainer.tsx:19) data', data);
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <section className="container mx-auto my-[3.125em] flex flex-col gap-y-[3.25em] lg:my-20 lg:grid lg:grid-cols-2 lg:gap-x-20 xl:my-[6.25em] xl:gap-x-[6.25em]">
