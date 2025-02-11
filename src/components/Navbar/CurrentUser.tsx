@@ -29,10 +29,10 @@ const CurrentUser: FC<Props> = ({ user }) => {
     <div className="flex items-center gap-x-4">
       <div className="flex items-center gap-x-[10px] lg:mr-auto 2xl:gap-x-[15px]">
         <div
-          className={`h-auto w-10 overflow-hidden rounded-md lg:w-[44px] xl:w-[54px] 2xl:h-[60px] 2xl:w-[60px] ${!profilePicture ? 'bg-light-97 p-3' : ''}`}
+          className={`h-10 w-10 overflow-hidden rounded-md lg:w-[44px] xl:w-[54px] 2xl:h-[60px] 2xl:w-[60px] ${!profilePicture ? 'bg-light-97 p-3' : ''}`}
         >
           {profilePicture && (
-            <img src={`${apiUrl}${profilePicture}`} alt={firstName} />
+            <img src={`${apiUrl}/${profilePicture}`} alt={firstName} />
           )}
           {!profilePicture && <UserIcon />}
         </div>

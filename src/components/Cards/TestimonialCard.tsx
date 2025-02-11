@@ -19,7 +19,7 @@ const TestimonialCard: FC<IReview> = ({ _id, content, authorId }) => {
               className={`h-[50px] w-[50px] overflow-hidden rounded-md 2xl:h-[60px] 2xl:w-[60px] ${!profilePicture ? 'bg-light-97 p-3' : ''}`}
             >
               {profilePicture && (
-                <img src={`${apiUrl}${profilePicture}`} alt={firstName} />
+                <img src={`${apiUrl}/${profilePicture}`} alt={firstName} />
               )}
               {!profilePicture && <UserIcon />}
             </div>
