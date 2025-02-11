@@ -107,12 +107,7 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        <Sidebar
-          user={currentUserResponse?.user}
-          visible={sideBarState}
-          isLg={isLg}
-          onClick={toggleSideBar}
-        />
+        <Sidebar visible={sideBarState} isLg={isLg} onClick={toggleSideBar} />
       </div>
     </nav>
   );

@@ -2,17 +2,27 @@ import { paths } from '../constants';
 import { NavLink } from 'react-router-dom';
 import { FC } from 'react';
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/react/24/outline';
-import { useLogOutMutation } from '../features/user/userApi.ts';
+import {
+  useGetCurrentUserQuery,
+  useLogOutMutation,
+} from '../features/user/userApi.ts';
 
 interface Props {
   visible: boolean;
   isLg: boolean;
   onClick: () => void;
-  user: IUserFromApi;
 }
 
-const Sidebar: FC<Props> = ({ visible, isLg, onClick, user }) => {
+const Sidebar: FC<Props> = ({ visible, isLg, onClick }) => {
   const [logout] = useLogOutMutation();
+  const { data: currentUserData, isError } = useGetCurrentUserQuery();
+
+  let userId: string;
+
+  if (currentUserData && !isError) {
+    userId = currentUserData.user._id;
+  }
+
   const logOutHandler = async () => {
     try {
       await logout();
@@ -26,13 +36,13 @@ const Sidebar: FC<Props> = ({ visible, isLg, onClick, user }) => {
     >
       <div className="flex flex-col gap-y-3 md:gap-y-4">
         {paths.map((item, index) => {
-          if (!user && item.title === 'Profile') {
+          if (!currentUserData?.user && item.title === 'Profile') {
             return null;
           }
           return (
             <NavLink
               key={index}
-              to={item.path}
+              to={item.title === 'Profile' ? `/profile/${userId}` : item.path}
               className={({ isActive }) =>
                 !isActive
                   ? 'rounded-md px-5 py-3 transition duration-200 hover:bg-light-95'
@@ -43,7 +53,7 @@ const Sidebar: FC<Props> = ({ visible, isLg, onClick, user }) => {
             </NavLink>
           );
         })}
-        {user && (
+        {currentUserData?.user && (
           <button
             className="flex justify-center rounded-md border border-light-95 px-5 py-3 transition duration-200 hover:bg-transparent"
             onClick={onClick}

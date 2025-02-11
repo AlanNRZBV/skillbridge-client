@@ -50,6 +50,12 @@ declare interface IUserFromApi {
   profilePicture: string | undefined;
 }
 
+declare interface IFullUserFromApi extends IUserFromApi {
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 declare interface IUserResponse extends ApiResponse {
   user: IUser;
 }
@@ -185,4 +191,8 @@ declare interface ICourseResponse extends ApiResponse {
 
 declare interface IAboutResponse extends ApiResponse {
   aboutData: IAboutData;
+}
+
+declare interface IFullUserResponse {
+  user: IFullUserFromApi;
 }

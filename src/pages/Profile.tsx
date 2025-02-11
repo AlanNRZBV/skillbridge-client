@@ -1,17 +1,33 @@
 import { useGetCurrentUserQuery } from '../features/user/userApi.ts';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const { data } = useGetCurrentUserQuery();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!data) {
-      navigate('/login');
-    }
-  }, [data, navigate]);
+  const {
+    data: userResponse,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useGetCurrentUserQuery();
 
-  return <div>checkout page</div>;
+  let content;
+
+  if (isLoading) {
+    content = <div>Loading...</div>;
+  }
+
+  if (isError) {
+    content = <div>Error occurred during data loading</div>;
+  }
+
+  if (isSuccess) {
+    const { user } = userResponse;
+    content = <div></div>;
+  }
+
+  return (
+    <div className="container mx-auto my-[3.125em] xl:my-[6.25em]">
+      {content}
+    </div>
+  );
 };
 
 export default Profile;

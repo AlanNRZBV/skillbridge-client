@@ -4,7 +4,6 @@ import { ArrowUpRightIcon, CheckIcon } from '@heroicons/react/16/solid';
 import { icons } from '../../constants';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
-  useGetCurrentUserQuery,
   useLoginMutation,
   useSignUpMutation,
 } from '../../features/user/userApi.ts';
@@ -46,12 +45,6 @@ const UserForm: FC<Props> = ({ formType }) => {
     signUp,
     { error: signUpError, isSuccess: isSignUpSuccess, data: signUpResponse },
   ] = useSignUpMutation();
-  const { data } = useGetCurrentUserQuery();
-
-  useEffect(() => {
-    if (data) {
-    }
-  }, []);
 
   const navigate = useNavigate();
 

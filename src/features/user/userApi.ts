@@ -24,12 +24,18 @@ export const userApi = api.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
-    getCurrentUser: builder.query<any, void>({
+    getCurrentUser: builder.query<ILoginResponse, void>({
       query: () => ({
         url: '/users/current',
         method: 'GET',
       }),
       providesTags: ['User'],
+    }),
+    getSelf: builder.query<IFullUserResponse, string>({
+      query: (arg: string) => ({
+        url: `/users/${arg}`,
+        method: 'GET',
+      }),
     }),
   }),
   overrideExisting: true,

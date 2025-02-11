@@ -13,7 +13,6 @@ interface Props {
 
 const CurrentUser: FC<Props> = ({ user }) => {
   const [logout] = useLogOutMutation();
-
   const { profilePicture, firstName, lastName, _id } = user;
 
   const logOutHandler = async () => {
